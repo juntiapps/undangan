@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Undangan Pernikahan Ahmad Fauzan Maulana & Nurul Hidayah Putri — 15 Maret 2025" />
+  <meta property="og:title" content="Undangan Pernikahan — Ahmad & Nurul" />
+  <meta property="og:description" content="Dengan memohon rahmat dan ridha Allah SWT, kami mengundang Bapak/Ibu/Saudara/i untuk hadir." />
+  <meta property="og:type" content="website" />
+  <title>Undangan Pernikahan | Ahmad &amp; Nurul</title>
+
+  <!-- Google Fonts: Amiri for Arabic text -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       LOADING SCREEN
+       ═══════════════════════════════════════════════════════════ -->
+  <div id="loading-screen" role="status" aria-label="Memuat undangan">
+    <div class="loading-terminal">
+      <div class="terminal-titlebar">
+        <span class="dot dot-red"></span>
+        <span class="dot dot-yellow"></span>
+        <span class="dot dot-green"></span>
+        <span class="terminal-title">bash — wedding-invitation v1.0.0</span>
+      </div>
+      <div class="terminal-body">
+        <div class="terminal-line">
+          <span class="prompt">user@wedding:~$</span>
+          <span class="cmd">git clone https://heaven.islam/nikah/ahmad-nurul.git</span>
+        </div>
+        <div class="terminal-line">
+          <span class="output">Cloning into 'undangan-pernikahan'...</span>
+        </div>
+        <div class="terminal-line">
+          <span class="output">remote: Enumerating objects: <span class="num">3</span>, done.</span>
+        </div>
+        <div class="terminal-line">
+          <span class="success">✓ Resolving deltas: 100% (3/3), done.</span>
+        </div>
+        <div class="terminal-line">
+          <span class="prompt">user@wedding:~$</span>
+          <span class="cmd">npm run wedding --guest=you</span>
+        </div>
+        <div class="terminal-line">
+          <span class="success">✓ Undangan berhasil dimuat! Selamat datang.</span>
+          <span class="cursor-blink"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       PARTICLE CANVAS (background)
+       ═══════════════════════════════════════════════════════════ -->
+  <canvas id="particles-canvas" aria-hidden="true"></canvas>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       TOP NAV BAR
+       ═══════════════════════════════════════════════════════════ -->
+  <header id="topbar" role="banner">
+    <div class="topbar-logo">
+      <span>~/</span>wedding<span>.invite</span>
+    </div>
+    <nav aria-label="Navigasi undangan">
+      <ul class="topbar-nav">
+        <li><a href="#couple">Mempelai</a></li>
+        <li><a href="#events">Acara</a></li>
+        <li><a href="#countdown">Countdown</a></li>
+        <li><a href="#location">Lokasi</a></li>
+        <li><a href="#rsvp">RSVP</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       MAIN CONTENT
+       ═══════════════════════════════════════════════════════════ -->
+  <main id="main-content">
+
+    <!-- ── HERO ──────────────────────────────────────────────── -->
+    <section id="hero" aria-labelledby="hero-heading">
+      <div class="hero-grid-overlay" aria-hidden="true"></div>
+
+      <div class="bismillah-wrap">
+        <p class="bismillah-ar" lang="ar">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</p>
+        <p class="bismillah-tr">Dengan nama Allah Yang Maha Pengasih lagi Maha Penyayang</p>
+      </div>
+
+      <p class="hero-comment">// Initializing wedding ceremony...</p>
+      <p class="hero-subtitle">&lt;UndanganPernikahan&gt;</p>
+
+      <div class="hero-names" id="hero-heading">
+        <span class="groom-name">Ahmad Fauzan<span class="name-suffix"> S.Kom</span></span>
+        <span class="ampersand">&amp;</span>
+        <span class="bride-name">Nurul Hidayah<span class="name-suffix"> S.T.</span></span>
+      </div>
+
+      <p class="hero-subtitle">&lt;/UndanganPernikahan&gt;</p>
+
+      <div class="hero-date-badge" aria-label="Tanggal pernikahan: Sabtu, 15 Maret 2025">
+        <span>📅</span>
+        <span>Sabtu</span>
+        <span class="sep">/</span>
+        <span>15.03.2025</span>
+        <span class="sep">/</span>
+        <span>Bandung</span>
+      </div>
+
+      <a href="#couple" class="hero-cta-btn" aria-label="Buka undangan">
+        <span>$ open --invitation</span>
+        <span>↓</span>
+      </a>
+    </section>
+
+    <hr class="section-divider" />
+
+    <!-- ── AYAT QURAN ─────────────────────────────────────────── -->
+    <section id="ayat" aria-labelledby="ayat-heading">
+      <p class="section-label">Firman Allah SWT</p>
+      <h2 class="section-title" id="ayat-heading">QS. Ar-Rum: 21</h2>
+
+      <div class="ayat-container reveal">
+        <p class="ayat-ar" lang="ar" dir="rtl">
+          وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُمْ مِنْ أَنْفُسِكُمْ أَزْوَاجًا لِتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُمْ مَوَدَّةً وَرَحْمَةً ۚ إِنَّ فِي ذَٰلِكَ لَآيَاتٍ لِقَوْمٍ يَتَفَكَّرُونَ
+        </p>
+        <p class="ayat-tr">
+          "Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri,
+          agar kamu merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa kasih dan sayang.
+          Sungguh, pada yang demikian itu benar-benar terdapat tanda-tanda (kebesaran Allah) bagi kaum yang berpikir."
+        </p>
+        <p class="ayat-source">— QS. Ar-Rum [30] : 21 —</p>
+      </div>
+    </section>
+
+    <hr class="section-divider" />
+
+    <!-- ── COUPLE ─────────────────────────────────────────────── -->
+    <section id="couple" aria-labelledby="couple-heading">
+      <p class="section-label">Mempelai</p>
+      <h2 class="section-title" id="couple-heading">
+        <span class="text-green">const</span> <span class="text-blue">couple</span> <span class="text-muted">=</span> <span class="text-yellow">[groom, bride]</span>
+      </h2>
+
+      <div class="couple-cards reveal">
+        <!-- Groom -->
+        <article class="couple-card groom" aria-label="Mempelai pria">
+          <div class="couple-avatar" aria-hidden="true">👨‍💻</div>
+          <p class="couple-role">// Mempelai Pria</p>
+          <p class="couple-name-ar" lang="ar">أحمد فوزان مولانا</p>
+          <h3 class="couple-name-id">Ahmad Fauzan Maulana</h3>
+          <p class="couple-degree">S.Kom — Backend Engineer</p>
+          <p class="couple-parents">
+            Putra pertama dari<br />
+            Bapak H. Muhamad Ridwan<br />
+            &amp; Ibu Hj. Siti Aminah
+          </p>
+        </article>
+
+        <!-- Connector -->
+        <div class="couple-connector" aria-hidden="true">
+          <span class="connector-line"></span>
+          <span>❤️</span>
+          <span class="connector-line"></span>
+        </div>
+
+        <!-- Bride -->
+        <article class="couple-card bride" aria-label="Mempelai wanita">
+          <div class="couple-avatar" aria-hidden="true">👩‍💻</div>
+          <p class="couple-role">// Mempelai Wanita</p>
+          <p class="couple-name-ar" lang="ar">نور الهداية فوتري</p>
+          <h3 class="couple-name-id">Nurul Hidayah Putri</h3>
+          <p class="couple-degree">S.T. — Cloud Infrastructure Engineer</p>
+          <p class="couple-parents">
+            Putri pertama dari<br />
+            Bapak H. Agus Setiawan<br />
+            &amp; Ibu Hj. Nuraini
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <hr class="section-divider" />
+
+    <!-- ── CODE DECORATION ────────────────────────────────────── -->
+    <section id="code-deco" aria-label="Dekorasi kode" style="padding-top:40px;padding-bottom:40px;">
+      <div class="code-block reveal" style="max-width:640px;margin:0 auto;">
+        <div class="code-header">
+          <div class="code-dots">
+            <span style="background:var(--accent-red)"></span>
+            <span style="background:var(--accent-yellow)"></span>
+            <span style="background:var(--accent-green)"></span>
+          </div>
+          <span class="code-filename">wedding.config.ts</span>
+          <span class="code-lang">TypeScript</span>
+        </div>
+        <div class="code-body" aria-hidden="true">
+          <code>
+            <span class="ln">1</span><span class="kw">interface</span> <span class="cls">WeddingConfig</span> <span class="punc">{</span><br />
+            <span class="ln">2</span>&nbsp;&nbsp;<span class="prop">akad</span><span class="op">:</span> <span class="cls">EventConfig</span><span class="punc">;</span><br />
+            <span class="ln">3</span>&nbsp;&nbsp;<span class="prop">resepsi</span><span class="op">:</span> <span class="cls">EventConfig</span><span class="punc">;</span><br />
+            <span class="ln">4</span>&nbsp;&nbsp;<span class="prop">couple</span><span class="op">:</span> <span class="punc">[</span><span class="cls">Groom</span><span class="punc">,</span> <span class="cls">Bride</span><span class="punc">];</span><br />
+            <span class="ln">5</span><span class="punc">}</span><br />
+            <span class="ln">6</span><br />
+            <span class="ln">7</span><span class="kw">const</span> <span class="cls">wedding</span><span class="op">:</span> <span class="cls">WeddingConfig</span> <span class="op">=</span> <span class="punc">{</span><br />
+            <span class="ln">8</span>&nbsp;&nbsp;<span class="prop">couple</span><span class="op">:</span> <span class="punc">[</span><span class="str">"Ahmad Fauzan"</span><span class="punc">,</span> <span class="str">"Nurul Hidayah"</span><span class="punc">],</span><br />
+            <span class="ln">9</span>&nbsp;&nbsp;<span class="prop">date</span><span class="op">:</span> <span class="kw">new</span> <span class="fn">Date</span><span class="punc">(</span><span class="str">"2025-03-15"</span><span class="punc">),</span><br />
+            <span class="ln">10</span>&nbsp;&nbsp;<span class="prop">status</span><span class="op">:</span> <span class="str">"sakinah_mawaddah_warahmah"</span><span class="punc">,</span><br />
+            <span class="ln">11</span>&nbsp;&nbsp;<span class="prop">blessed</span><span class="op">:</span> <span class="kw">true</span><span class="punc">,</span><br />
+            <span class="ln">12</span>&nbsp;&nbsp;<span class="cmt">// Barakallahu lakuma 🤍</span><br />
+            <span class="ln">13</span><span class="punc">};</span><br />
+            <span class="ln">14</span><br />
+            <span class="ln">15</span><span class="kw">export default</span> <span class="cls">wedding</span><span class="punc">;</span>
+          </code>
+        </div>
+      </div>
+    </section>
+
+    <hr class="section-divider" />
+
+    <!-- ── EVENTS ─────────────────────────────────────────────── -->
+    <section id="events" aria-labelledby="events-heading">
+      <p class="section-label">Jadwal Acara</p>
+      <h2 class="section-title" id="events-heading">
+        <span class="text-green">schedule</span><span class="text-muted">.events</span><span class="text-yellow">()</span>
+      </h2>
+
+      <div class="event-cards reveal">
+
+        <!-- Akad Nikah -->
+        <article class="event-card akad" aria-label="Acara akad nikah">
+          <div class="event-type-badge">
+            <span>⚡</span> AKAD_NIKAH
+          </div>
+          <h3 class="event-name">Akad Nikah</h3>
+          <div class="event-detail-row">
+            <span class="event-icon">📅</span>
+            <span class="event-detail-label">date:</span>
+            <span class="event-detail-value">Sabtu, 15 Maret 2025</span>
+          </div>
+          <div class="event-detail-row">
+            <span class="event-icon">🕘</span>
+            <span class="event-detail-label">time:</span>
+            <span class="event-detail-value">08.00 — 10.00 WIB</span>
+          </div>
+          <div class="event-detail-row">
+            <span class="event-icon">📍</span>
+            <span class="event-detail-label">location:</span>
+            <span class="event-detail-value">Masjid Al-Ikhlas<br />Jl. Raya Cibiru No. 12, Bandung</span>
+          </div>
+          <div class="event-detail-row">
+            <span class="event-icon">👔</span>
+            <span class="event-detail-label">dresscode:</span>
+            <span class="event-detail-value">Busana Muslim / Islami</span>
+          </div>
+        </article>
+
+        <!-- Resepsi -->
+        <article class="event-card resepsi" aria-label="Acara resepsi pernikahan">
+          <div class="event-type-badge">
+            <span>🎉</span> RESEPSI
+          </div>
+          <h3 class="event-name">Resepsi Pernikahan</h3>
+          <div class="event-detail-row">
+            <span class="event-icon">📅</span>
+            <span class="event-detail-label">date:</span>
+            <span class="event-detail-value">Sabtu, 15 Maret 2025</span>
+          </div>
+          <div class="event-detail-row">
+            <span class="event-icon">🕑</span>
+            <span class="event-detail-label">time:</span>
+            <span class="event-detail-value">11.00 — 15.00 WIB</span>
+          </div>
+          <div class="event-detail-row">
+            <span class="event-icon">📍</span>
+            <span class="event-detail-label">location:</span>
+            <span class="event-detail-value">Aula Gedung Serbaguna<br />Jl. Cihampelas No. 88, Bandung</span>
+          </div>
+          <div class="event-detail-row">
+            <span class="event-icon">👗</span>
+            <span class="event-detail-label">dresscode:</span>
+            <span class="event-detail-value">Busana Muslim — Hijau / Tosca</span>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <hr class="section-divider" />
+
+    <!-- ── COUNTDOWN ──────────────────────────────────────────── -->
+    <section id="countdown" aria-labelledby="countdown-heading">
+      <p class="section-label">Hitung Mundur</p>
+      <h2 class="section-title" id="countdown-heading">
+        <span class="text-green">timer</span><span class="text-muted">.toWedding</span><span class="text-yellow">()</span>
+      </h2>
+
+      <div class="countdown-timer reveal" role="timer" aria-label="Hitung mundur menuju hari pernikahan">
+        <div class="countdown-unit">
+          <span class="countdown-num" id="cd-days">00</span>
+          <span class="countdown-label">Hari</span>
+        </div>
+        <div class="countdown-unit">
+          <span class="countdown-num" id="cd-hours">00</span>
+          <span class="countdown-label">Jam</span>
+        </div>
+        <div class="countdown-unit">
+          <span class="countdown-num" id="cd-minutes">00</span>
+          <span class="countdown-label">Menit</span>
+        </div>
+        <div class="countdown-unit">
+          <span class="countdown-num" id="cd-seconds">00</span>
+          <span class="countdown-label">Detik</span>
+        </div>
+      </div>
+
+      <p class="countdown-note">// Menuju hari bahagia 15 Maret 2025 — Insya Allah</p>
+    </section>
+
+    <hr class="section-divider" />
+
+    <!-- ── LOCATION ───────────────────────────────────────────── -->
+    <section id="location" aria-labelledby="location-heading">
+      <p class="section-label">Lokasi</p>
+      <h2 class="section-title" id="location-heading">
+        <span class="text-green">GET</span> <span class="text-yellow">/api/venue</span>
+      </h2>
+
+      <div class="location-cards reveal">
+
+        <div class="location-card" aria-label="Lokasi akad nikah">
+          <div class="location-header">
+            <div class="location-icon" aria-hidden="true">🕌</div>
+            <div>
+              <p class="location-title">// Akad Nikah</p>
+              <p class="location-name">Masjid Al-Ikhlas</p>
+            </div>
+          </div>
+          <p class="location-address">
+            Jl. Raya Cibiru No. 12<br />
+            Cibiru, Bandung<br />
+            Jawa Barat 40615
+          </p>
+          <a
+            class="map-btn"
+            href="https://maps.google.com/?q=Masjid+Al-Ikhlas+Cibiru+Bandung"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Buka di Google Maps"
+          >
+            📍 Buka di Google Maps
+          </a>
+        </div>
+
+        <div class="location-card" aria-label="Lokasi resepsi pernikahan">
+          <div class="location-header">
+            <div class="location-icon" aria-hidden="true">🏛️</div>
+            <div>
+              <p class="location-title">// Resepsi</p>
+              <p class="location-name">Aula Gedung Serbaguna</p>
+            </div>
+          </div>
+          <p class="location-address">
+            Jl. Cihampelas No. 88<br />
+            Cidadap, Bandung<br />
+            Jawa Barat 40141
+          </p>
+          <a
+            class="map-btn"
+            href="https://maps.google.com/?q=Jl+Cihampelas+88+Bandung"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Buka di Google Maps"
+          >
+            📍 Buka di Google Maps
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+    <hr class="section-divider" />
+
+    <!-- ── PROTOCOL (Health & Safety) ────────────────────────── -->
+    <section id="protocol" aria-labelledby="protocol-heading">
+      <p class="section-label">Protokol Acara</p>
+      <h2 class="section-title" id="protocol-heading">
+        <span class="text-green">rules</span><span class="text-muted">.apply</span><span class="text-yellow">(guest)</span>
+      </h2>
+
+      <div class="protocol-grid reveal">
+        <div class="protocol-item">
+          <p class="protocol-emoji" aria-hidden="true">😷</p>
+          <p class="protocol-text">Menggunakan<br />masker dianjurkan</p>
+        </div>
+        <div class="protocol-item">
+          <p class="protocol-emoji" aria-hidden="true">🤲</p>
+          <p class="protocol-text">Bersalaman<br />secara Islami</p>
+        </div>
+        <div class="protocol-item">
+          <p class="protocol-emoji" aria-hidden="true">👗</p>
+          <p class="protocol-text">Busana Muslim<br />& Sopan</p>
+        </div>
+        <div class="protocol-item">
+          <p class="protocol-emoji" aria-hidden="true">📵</p>
+          <p class="protocol-text">Harap nonaktifkan<br />bunyi gawai</p>
+        </div>
+        <div class="protocol-item">
+          <p class="protocol-emoji" aria-hidden="true">🎁</p>
+          <p class="protocol-text">Hadiah kehadiran<br />Anda sudah cukup</p>
+        </div>
+        <div class="protocol-item">
+          <p class="protocol-emoji" aria-hidden="true">🤝</p>
+          <p class="protocol-text">Doa restu<br />sangat berarti</p>
+        </div>
+      </div>
+    </section>
+
+    <hr class="section-divider" />
+
+    <!-- ── RSVP ───────────────────────────────────────────────── -->
+    <section id="rsvp" aria-labelledby="rsvp-heading">
+      <p class="section-label">Konfirmasi Kehadiran</p>
+      <h2 class="section-title" id="rsvp-heading">
+        <span class="text-green">POST</span> <span class="text-yellow">/api/rsvp</span>
+      </h2>
+
+      <div class="rsvp-container">
+        <form class="rsvp-form" id="rsvp-form" novalidate aria-label="Form konfirmasi kehadiran">
+          <div class="form-group">
+            <label class="form-label" for="rsvp-name">// nama_lengkap</label>
+            <input
+              class="form-input"
+              id="rsvp-name"
+              type="text"
+              placeholder="Masukkan nama Anda"
+              required
+              autocomplete="name"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="rsvp-attend">// konfirmasi_hadir</label>
+            <select class="form-select" id="rsvp-attend" required>
+              <option value="" disabled selected>-- Pilih konfirmasi --</option>
+              <option value="hadir">✓ Insya Allah Hadir</option>
+              <option value="tidak">✗ Mohon maaf, tidak bisa hadir</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="rsvp-guests">// jumlah_tamu</label>
+            <input
+              class="form-input"
+              id="rsvp-guests"
+              type="number"
+              placeholder="1"
+              min="1"
+              max="10"
+              value="1"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="rsvp-message">// doa_dan_ucapan</label>
+            <textarea
+              class="form-textarea"
+              id="rsvp-message"
+              placeholder="Tuliskan doa dan ucapan untuk mempelai..."
+            ></textarea>
+          </div>
+          <button type="submit" class="submit-btn">
+            $ git commit -m "hadir_di_pernikahan"
+          </button>
+        </form>
+
+        <div class="rsvp-success" id="rsvp-success" role="alert" aria-live="polite">
+          <p style="font-size:1.5rem;margin-bottom:8px;">✅</p>
+          <p>Jazakumullah khairan katsiran!</p>
+          <p class="text-muted mt-8" style="font-size:0.78rem;">
+            Konfirmasi kehadiran Anda telah diterima.<br />
+            Kami sangat menantikan kehadiran Anda.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <hr class="section-divider" />
+
+    <!-- ── WISHES ─────────────────────────────────────────────── -->
+    <section id="wishes" aria-labelledby="wishes-heading">
+      <p class="section-label">Ucapan &amp; Doa</p>
+      <h2 class="section-title" id="wishes-heading">
+        <span class="text-green">git</span> <span class="text-blue">log</span> <span class="text-muted">--wishes</span>
+      </h2>
+
+      <div class="wishes-list" id="wishes-list" aria-label="Daftar ucapan dan doa tamu" aria-live="polite">
+        <!-- Wishes populated by JS -->
+      </div>
+    </section>
+
+    <hr class="section-divider" />
+
+    <!-- ── GIFT ───────────────────────────────────────────────── -->
+    <section id="gift" aria-labelledby="gift-heading">
+      <p class="section-label">Kirim Hadiah</p>
+      <h2 class="section-title" id="gift-heading">
+        <span class="text-green">transfer</span><span class="text-muted">.send</span><span class="text-yellow">(gift)</span>
+      </h2>
+      <p class="text-muted mt-8" style="font-size:0.82rem;">
+        Bagi yang ingin memberikan hadiah, dapat melalui:
+      </p>
+
+      <div class="gift-cards reveal">
+        <div class="gift-card">
+          <p class="gift-bank">// Bank BCA</p>
+          <p class="gift-account-name">Ahmad Fauzan Maulana</p>
+          <p class="gift-account-num">1234 5678 9012</p>
+          <button class="copy-btn" data-copy="1234567890 12" aria-label="Salin nomor rekening BCA">
+            ⎘ Salin Nomor
+          </button>
+        </div>
+        <div class="gift-card">
+          <p class="gift-bank">// Bank Mandiri</p>
+          <p class="gift-account-name">Nurul Hidayah Putri</p>
+          <p class="gift-account-num">9876 5432 1098</p>
+          <button class="copy-btn" data-copy="987654321098" aria-label="Salin nomor rekening Mandiri">
+            ⎘ Salin Nomor
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <hr class="section-divider" />
+
+    <!-- ── CLOSING ────────────────────────────────────────────── -->
+    <section id="closing" aria-labelledby="closing-heading">
+      <p class="section-label">Penutup</p>
+      <h2 class="section-title" id="closing-heading">
+        <span class="text-green">process</span><span class="text-muted">.exit</span><span class="text-yellow">(0)</span>
+        <span class="text-muted" style="font-size:0.6em;"> // Semoga berkah</span>
+      </h2>
+
+      <div class="closing-doa reveal">
+        <p class="closing-doa-ar" lang="ar" dir="rtl">
+          رَبَّنَا هَبْ لَنَا مِنْ أَزْوَاجِنَا وَذُرِّيَّاتِنَا قُرَّةَ أَعْيُنٍ وَاجْعَلْنَا لِلْمُتَّقِينَ إِمَامًا
+        </p>
+        <p class="closing-doa-tr">
+          "Ya Tuhan kami, anugerahkanlah kepada kami pasangan kami dan keturunan kami sebagai penyenang hati (kami),
+          dan jadikanlah kami pemimpin bagi orang-orang yang bertakwa."
+          <br />— QS. Al-Furqan [25]: 74 —
+        </p>
+      </div>
+
+      <div class="closing-ttd">
+        <p>Kami yang berbahagia,</p>
+        <p class="ttd-names">
+          <span>Ahmad Fauzan Maulana</span>
+          &amp;
+          <span>Nurul Hidayah Putri</span>
+        </p>
+        <p class="text-muted mt-8" style="font-size:0.78rem;">
+          Beserta keluarga besar
+        </p>
+      </div>
+
+      <!-- Final code block -->
+      <div class="code-block reveal" style="max-width:500px;margin:0 auto 0;">
+        <div class="code-header">
+          <div class="code-dots">
+            <span style="background:var(--accent-red)"></span>
+            <span style="background:var(--accent-yellow)"></span>
+            <span style="background:var(--accent-green)"></span>
+          </div>
+          <span class="code-filename">doa.sh</span>
+          <span class="code-lang">Shell</span>
+        </div>
+        <div class="code-body" aria-hidden="true">
+          <code>
+            <span class="ln">1</span><span class="cmt">#!/bin/bash</span><br />
+            <span class="ln">2</span><span class="cmt"># Barakallahu lakuma wa baraka alaikuma</span><br />
+            <span class="ln">3</span><span class="cmt"># wa jama'a bainakuma fi khair</span><br />
+            <span class="ln">4</span><br />
+            <span class="ln">5</span><span class="fn">echo</span> <span class="str">"🤲 Semoga menjadi keluarga"</span><br />
+            <span class="ln">6</span><span class="fn">echo</span> <span class="str">"   sakinah, mawaddah, wa rahmah"</span><br />
+            <span class="ln">7</span><span class="fn">echo</span> <span class="str">"   hingga Jannah — Aamiin 🤍"</span><br />
+            <span class="ln">8</span><br />
+            <span class="ln">9</span><span class="kw">exit</span> <span class="num">0</span>
+          </code>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ── FOOTER ─────────────────────────────────────────────── -->
+    <footer role="contentinfo">
+      <p>
+        Made with ❤️ &amp; <span class="text-green">Consolas</span> font ·
+        <a href="#hero">Kembali ke atas ↑</a>
+      </p>
+      <p class="footer-git">
+        <span class="text-green">⎇ main</span>
+        <span>·</span>
+        <span>commit <span class="text-yellow">bismillah</span></span>
+        <span>·</span>
+        <span class="text-muted">Ahmad &amp; Nurul Wedding © 2025</span>
+      </p>
+    </footer>
+
+  </main>
+
+  <!-- ── Floating Music Toggle ──────────────────────────────── -->
+  <button
+    id="music-toggle"
+    aria-label="Putar musik latar"
+    title="Putar Musik"
+  >♪</button>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
