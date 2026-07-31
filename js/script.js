@@ -2,6 +2,59 @@
 (function () {
   'use strict';
 
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function announceStatus(message) {
+    const status = document.getElementById('ui-status');
+    if (!status) return;
+    status.textContent = '';
+    window.setTimeout(() => {
+      status.textContent = message;
+    }, 50);
+  }
+
+  /* ─── Theme toggle ────────────────────────────────────────── */
+  const themeToggle = document.getElementById('theme-toggle');
+  const themeIcon = themeToggle ? themeToggle.querySelector('.theme-toggle-icon') : null;
+  const themeText = themeToggle ? themeToggle.querySelector('.theme-toggle-text') : null;
+
+  function setTheme(theme, announce = false) {
+    const normalized = theme === 'light' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', normalized);
+    localStorage.setItem('theme-preference', normalized);
+
+    if (!themeToggle) return;
+
+    const isLight = normalized === 'light';
+    themeToggle.setAttribute('aria-pressed', isLight ? 'true' : 'false');
+    themeToggle.setAttribute('aria-label', isLight ? 'Aktifkan tema gelap' : 'Aktifkan tema terang');
+    if (themeIcon) themeIcon.textContent = isLight ? '🌙' : '☀';
+    if (themeText) themeText.textContent = isLight ? 'Tema gelap' : 'Tema terang';
+    if (announce) {
+      announceStatus(isLight ? 'Tema terang aktif.' : 'Tema gelap aktif.');
+    }
+  }
+
+  function initTheme() {
+    const stored = localStorage.getItem('theme-preference');
+    if (stored === 'light' || stored === 'dark') {
+      setTheme(stored);
+      return;
+    }
+
+    const systemPrefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+    setTheme(systemPrefersLight ? 'light' : 'dark');
+  }
+
+  initTheme();
+
+  if (themeToggle) {
+    themeToggle.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme') || 'dark';
+      setTheme(current === 'light' ? 'dark' : 'light', true);
+    });
+  }
+
   /* ─── Particle canvas ─────────────────────────────────────── */
   const canvas = document.getElementById('particles-canvas');
   if (canvas) {
@@ -48,7 +101,12 @@
     function loop() { drawParticles(); animId = requestAnimationFrame(loop); }
     window.addEventListener('resize', resize);
     resize();
-    loop();
+
+    if (!prefersReducedMotion) {
+      loop();
+    } else {
+      drawParticles();
+    }
   }
 
   /* ─── Loading screen ──────────────────────────────────────── */
@@ -138,8 +196,34 @@
   }
 
   /* ─── Countdown timer ─────────────────────────────────────── */
+  const DEFAULT_YOUTUBE_VIDEO_ID = 'QgaTQ5-XfMM';
+  let selectedYoutubeVideoId = DEFAULT_YOUTUBE_VIDEO_ID;
   let weddingDate = new Date('2025-03-15T09:00:00');
   let countdownExpiredNote = '// Barakallahu lakuma wa baraka alaikuma wa jama\'a bainakuma fi khair';
+
+  function normalizeYouTubeVideoId(value) {
+    const text = String(value || '').trim();
+    const idPattern = /^[a-zA-Z0-9_-]{11}$/;
+    if (idPattern.test(text)) return text;
+
+    if (!text) return '';
+    try {
+      const url = new URL(text);
+      if (url.hostname.includes('youtu.be')) {
+        const candidate = url.pathname.replace(/^\//, '').trim();
+        return idPattern.test(candidate) ? candidate : '';
+      }
+
+      if (url.hostname.includes('youtube.com')) {
+        const candidate = url.searchParams.get('v') || '';
+        return idPattern.test(candidate) ? candidate : '';
+      }
+    } catch {
+      return '';
+    }
+
+    return '';
+  }
 
   function applySiteConfig(config) {
     if (!config) return;
@@ -217,6 +301,11 @@
     setText('code-groom-name', branding.codeGroomName);
     setText('code-bride-name', branding.codeBrideName);
 
+    const configuredYoutubeId = normalizeYouTubeVideoId(branding.youtubeVideoId);
+    if (configuredYoutubeId) {
+      selectedYoutubeVideoId = configuredYoutubeId;
+    }
+
     const parsedDate = new Date(hero.countdownDateIso);
     if (!Number.isNaN(parsedDate.getTime())) {
       weddingDate = parsedDate;
@@ -259,6 +348,9 @@
     })
     .catch(() => {
       // Keep static fallback from HTML when config is unavailable.
+    })
+    .finally(() => {
+      initMusicToggle();
     });
 
   updateCountdown();
@@ -274,6 +366,7 @@
         btn.textContent = '✓ Disalin!';
         btn.style.color = 'var(--accent-green)';
         btn.style.borderColor = 'var(--accent-green)';
+        announceStatus('Nomor rekening berhasil disalin.');
         setTimeout(() => {
           btn.textContent = original;
           btn.style.color = '';
@@ -293,6 +386,7 @@
         window.getSelection().removeAllRanges();
         document.body.removeChild(span);
         btn.textContent = '✓ Disalin!';
+        announceStatus('Nomor rekening berhasil disalin.');
         setTimeout(() => { btn.textContent = '⎘ Salin Nomor'; }, 2000);
       });
     });
@@ -302,6 +396,36 @@
   const rsvpForm    = document.getElementById('rsvp-form');
   const rsvpSuccess = document.getElementById('rsvp-success');
   const rsvpSubmit  = rsvpForm ? rsvpForm.querySelector('button[type="submit"]') : null;
+  const rsvpFormError = document.getElementById('rsvp-form-error');
+
+  function setRsvpFieldError(field, hasError) {
+    if (!field) return;
+    field.setAttribute('aria-invalid', hasError ? 'true' : 'false');
+  }
+
+  function clearRsvpErrors() {
+    ['rsvp-name', 'rsvp-attend', 'rsvp-guests', 'rsvp-message'].forEach((id) => {
+      setRsvpFieldError(document.getElementById(id), false);
+    });
+
+    if (rsvpFormError) {
+      rsvpFormError.hidden = true;
+      rsvpFormError.textContent = '';
+    }
+  }
+
+  function showRsvpError(message, fields) {
+    if (Array.isArray(fields)) {
+      fields.forEach((field) => setRsvpFieldError(field, true));
+    }
+
+    if (rsvpFormError) {
+      rsvpFormError.textContent = message;
+      rsvpFormError.hidden = false;
+    }
+
+    announceStatus(message);
+  }
 
   async function fetchRsvps() {
     const response = await fetch('/api/rsvp');
@@ -331,12 +455,41 @@
   if (rsvpForm) {
     rsvpForm.addEventListener('submit', async e => {
       e.preventDefault();
-      const name    = document.getElementById('rsvp-name').value.trim();
-      const attend  = document.getElementById('rsvp-attend').value;
-      const guests  = Number(document.getElementById('rsvp-guests').value || 1);
-      const message = document.getElementById('rsvp-message').value.trim();
+      clearRsvpErrors();
 
-      if (!name || !attend) return;
+      const nameField = document.getElementById('rsvp-name');
+      const attendField = document.getElementById('rsvp-attend');
+      const guestsField = document.getElementById('rsvp-guests');
+      const messageField = document.getElementById('rsvp-message');
+
+      const name    = nameField.value.trim();
+      const attend  = attendField.value;
+      const guests  = Number(guestsField.value || 1);
+      const message = messageField.value.trim();
+
+      if (!name && !attend) {
+        showRsvpError('Nama lengkap dan konfirmasi kehadiran wajib diisi.', [nameField, attendField]);
+        nameField.focus();
+        return;
+      }
+
+      if (!name) {
+        showRsvpError('Nama lengkap wajib diisi.', [nameField]);
+        nameField.focus();
+        return;
+      }
+
+      if (!attend) {
+        showRsvpError('Pilih status konfirmasi kehadiran terlebih dahulu.', [attendField]);
+        attendField.focus();
+        return;
+      }
+
+      if (!Number.isFinite(guests) || guests < 1 || guests > 10) {
+        showRsvpError('Jumlah tamu harus antara 1 sampai 10.', [guestsField]);
+        guestsField.focus();
+        return;
+      }
 
       const originalButtonText = rsvpSubmit ? rsvpSubmit.textContent : null;
       if (rsvpSubmit) {
@@ -350,10 +503,13 @@
 
         rsvpForm.reset();
         rsvpForm.style.display = 'none';
-        if (rsvpSuccess) rsvpSuccess.style.display = 'block';
+        if (rsvpSuccess) {
+          rsvpSuccess.style.display = 'block';
+          announceStatus('RSVP berhasil dikirim. Terima kasih atas konfirmasinya.');
+        }
       } catch (err) {
         const errorText = err instanceof Error ? err.message : 'Terjadi kesalahan saat kirim RSVP.';
-        window.alert(errorText);
+        showRsvpError(errorText, []);
       } finally {
         if (rsvpSubmit) {
           rsvpSubmit.disabled = false;
@@ -435,16 +591,124 @@
 
   initWishes();
 
-  /* ─── Music toggle placeholder ────────────────────────────── */
-  const musicBtn = document.getElementById('music-toggle');
-  let musicPlaying = false;
+  /* ─── Music toggle ────────────────────────────────────────── */
+  function initMusicToggle() {
+    const musicBtn = document.getElementById('music-toggle');
+    const youtubePlayerHost = document.getElementById('youtube-player');
+    let ytPlayer = null;
+    let ytReady = false;
+    let musicPlaying = false;
 
-  if (musicBtn) {
-    musicBtn.addEventListener('click', () => {
-      musicPlaying = !musicPlaying;
-      musicBtn.textContent = musicPlaying ? '⏸' : '♪';
-      musicBtn.title = musicPlaying ? 'Jeda Musik' : 'Putar Musik';
-    });
+    function loadYouTubeApi() {
+      return new Promise((resolve, reject) => {
+        if (window.YT && window.YT.Player) {
+          resolve(window.YT);
+          return;
+        }
+
+        const previousReady = window.onYouTubeIframeAPIReady;
+        window.onYouTubeIframeAPIReady = function onYouTubeIframeAPIReady() {
+          if (typeof previousReady === 'function') {
+            previousReady();
+          }
+          resolve(window.YT);
+        };
+
+        const existingScript = document.querySelector('script[data-youtube-api="true"]');
+        if (!existingScript) {
+          const script = document.createElement('script');
+          script.src = 'https://www.youtube.com/iframe_api';
+          script.async = true;
+          script.defer = true;
+          script.setAttribute('data-youtube-api', 'true');
+          script.onerror = () => reject(new Error('Gagal memuat YouTube API'));
+          document.head.appendChild(script);
+        }
+      });
+    }
+
+    function setMusicButtonState(isPlaying) {
+      if (!musicBtn) return;
+      musicBtn.textContent = isPlaying ? '⏸' : '♪';
+      musicBtn.title = isPlaying ? 'Jeda Musik' : 'Putar Musik';
+      musicBtn.setAttribute('aria-label', isPlaying ? 'Jeda musik latar' : 'Putar musik latar');
+      musicBtn.setAttribute('aria-pressed', isPlaying ? 'true' : 'false');
+    }
+
+    if (musicBtn && youtubePlayerHost) {
+      musicBtn.disabled = true;
+      musicBtn.title = 'Menyiapkan audio YouTube';
+      setMusicButtonState(false);
+
+      loadYouTubeApi()
+        .then((YT) => {
+          ytPlayer = new YT.Player('youtube-player', {
+            height: '0',
+            width: '0',
+            videoId: selectedYoutubeVideoId,
+            playerVars: {
+              autoplay: 0,
+              controls: 0,
+              disablekb: 1,
+              fs: 0,
+              iv_load_policy: 3,
+              modestbranding: 1,
+              playsinline: 1,
+              rel: 0,
+            },
+            events: {
+              onReady: () => {
+                ytReady = true;
+                musicBtn.disabled = false;
+                musicBtn.title = 'Putar Musik';
+                ytPlayer.setVolume(45);
+              },
+              onStateChange: (event) => {
+                if (event.data === YT.PlayerState.PLAYING) {
+                  musicPlaying = true;
+                  setMusicButtonState(true);
+                  return;
+                }
+
+                if (event.data === YT.PlayerState.PAUSED || event.data === YT.PlayerState.ENDED) {
+                  musicPlaying = false;
+                  setMusicButtonState(false);
+                }
+              },
+              onError: () => {
+                musicBtn.disabled = true;
+                musicBtn.title = 'Audio YouTube gagal dimuat';
+                announceStatus('Audio YouTube gagal dimuat.');
+              },
+            },
+          });
+        })
+        .catch(() => {
+          musicBtn.disabled = true;
+          musicBtn.title = 'YouTube API gagal dimuat';
+          announceStatus('YouTube API gagal dimuat.');
+        });
+
+      musicBtn.addEventListener('click', () => {
+        if (!ytPlayer || !ytReady) {
+          announceStatus('Player YouTube belum siap.');
+          return;
+        }
+
+        if (!musicPlaying) {
+          ytPlayer.playVideo();
+          announceStatus('Musik YouTube diputar.');
+          return;
+        }
+
+        ytPlayer.pauseVideo();
+        announceStatus('Musik YouTube dijeda.');
+      });
+    } else if (musicBtn) {
+      musicBtn.disabled = true;
+      musicBtn.title = 'Player YouTube belum tersedia';
+      musicBtn.setAttribute('aria-label', 'Player YouTube belum tersedia');
+    }
   }
 
 })();

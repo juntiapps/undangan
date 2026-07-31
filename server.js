@@ -80,7 +80,8 @@ const DEFAULT_SITE_CONFIG = {
     giftAccountName2: 'Nurul Hidayah Putri',
     closingGroomName: 'Ahmad Fauzan Maulana',
     closingBrideName: 'Nurul Hidayah Putri',
-    footerBranding: 'Ahmad & Nurul Wedding © 2025'
+    footerBranding: 'Ahmad & Nurul Wedding © 2025',
+    youtubeVideoId: 'QgaTQ5-XfMM'
   }
 };
 
@@ -151,6 +152,31 @@ function cleanUrl(value) {
   } catch {
     return '';
   }
+}
+
+function cleanYouTubeVideoId(value) {
+  const text = String(value || '').trim();
+  const idPattern = /^[a-zA-Z0-9_-]{11}$/;
+  if (idPattern.test(text)) return text;
+
+  if (!text) return '';
+  try {
+    const url = new URL(text);
+
+    if (url.hostname.includes('youtu.be')) {
+      const candidate = url.pathname.replace(/^\//, '').trim();
+      return idPattern.test(candidate) ? candidate : '';
+    }
+
+    if (url.hostname.includes('youtube.com')) {
+      const candidate = url.searchParams.get('v') || '';
+      return idPattern.test(candidate) ? candidate : '';
+    }
+  } catch {
+    return '';
+  }
+
+  return '';
 }
 
 function normalizeSiteConfig(payload) {
@@ -234,6 +260,7 @@ function normalizeSiteConfig(payload) {
       closingGroomName: cleanText(branding.closingGroomName, 100) || groomName,
       closingBrideName: cleanText(branding.closingBrideName, 100) || brideName,
       footerBranding: cleanText(branding.footerBranding, 140) || `${groomShortName} & ${brideShortName} Wedding`,
+      youtubeVideoId: cleanYouTubeVideoId(branding.youtubeVideoId) || DEFAULT_SITE_CONFIG.branding.youtubeVideoId,
     }
   };
 }

@@ -7,7 +7,7 @@
   <meta id="meta-og-title" property="og:title" content="Undangan Pernikahan — Ahmad & Nurul" />
   <meta id="meta-og-description" property="og:description" content="Dengan memohon rahmat dan ridha Allah SWT, kami mengundang Bapak/Ibu/Saudara/i untuk hadir." />
   <meta property="og:type" content="website" />
-  <title id="page-title">Undangan Pernikahan | Farah &amp; Arief</title>
+  <title id="page-title">Undangan Pernikahan | Ahmad &amp; Nurul</title>
 
   <!-- Google Fonts: Amiri for Arabic text -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -17,6 +17,8 @@
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
+
+  <a class="skip-link" href="#main-content">Lewati ke konten utama</a>
 
   <!-- ═══════════════════════════════════════════════════════════
        LOADING SCREEN
@@ -66,6 +68,19 @@
   <header id="topbar" role="banner">
     <div class="topbar-logo">
       <span>~/</span>wedding<span>.invite</span>
+    </div>
+    <div class="topbar-actions">
+      <button
+        id="theme-toggle"
+        type="button"
+        class="theme-toggle"
+        aria-pressed="false"
+        aria-label="Aktifkan tema terang"
+        title="Ubah tema"
+      >
+        <span aria-hidden="true" class="theme-toggle-icon">☀</span>
+        <span class="theme-toggle-text">Tema terang</span>
+      </button>
     </div>
     <nav aria-label="Navigasi undangan">
       <ul class="topbar-nav">
@@ -434,6 +449,7 @@
 
       <div class="rsvp-container">
         <form class="rsvp-form" id="rsvp-form" novalidate aria-label="Form konfirmasi kehadiran">
+          <p id="rsvp-form-error" class="form-error" role="alert" aria-live="polite" hidden></p>
           <div class="form-group">
             <label class="form-label" for="rsvp-name">// nama_lengkap</label>
             <input
@@ -443,11 +459,12 @@
               placeholder="Masukkan nama Anda"
               required
               autocomplete="name"
+              aria-describedby="rsvp-form-error"
             />
           </div>
           <div class="form-group">
             <label class="form-label" for="rsvp-attend">// konfirmasi_hadir</label>
-            <select class="form-select" id="rsvp-attend" required>
+            <select class="form-select" id="rsvp-attend" required aria-describedby="rsvp-form-error">
               <option value="" disabled selected>-- Pilih konfirmasi --</option>
               <option value="hadir">✓ Insya Allah Hadir</option>
               <option value="tidak">✗ Mohon maaf, tidak bisa hadir</option>
@@ -463,6 +480,7 @@
               min="1"
               max="10"
               value="1"
+              aria-describedby="rsvp-form-error"
             />
           </div>
           <div class="form-group">
@@ -471,6 +489,7 @@
               class="form-textarea"
               id="rsvp-message"
               placeholder="Tuliskan doa dan ucapan untuk mempelai..."
+              aria-describedby="rsvp-form-error"
             ></textarea>
           </div>
           <button type="submit" class="submit-btn">
@@ -481,7 +500,7 @@
         <div class="rsvp-success" id="rsvp-success" role="alert" aria-live="polite">
           <p style="font-size:1.5rem;margin-bottom:8px;">✅</p>
           <p>Jazakumullah khairan katsiran!</p>
-          <p class="text-muted mt-8" style="font-size:0.78rem;">
+          <p class="text-muted mt-8" style="font-size:0.92rem;">
             Konfirmasi kehadiran Anda telah diterima.<br />
             Kami sangat menantikan kehadiran Anda.
           </p>
@@ -511,7 +530,7 @@
       <h2 class="section-title" id="gift-heading">
         <span class="text-green">transfer</span><span class="text-muted">.send</span><span class="text-yellow">(gift)</span>
       </h2>
-      <p class="text-muted mt-8" style="font-size:0.82rem;">
+      <p class="text-muted mt-8" style="font-size:0.95rem;">
         Bagi yang ingin memberikan hadiah, dapat melalui:
       </p>
 
@@ -563,7 +582,7 @@
           &amp;
           <span id="closing-bride-name">Nurul Hidayah Putri</span>
         </p>
-        <p class="text-muted mt-8" style="font-size:0.78rem;">
+        <p class="text-muted mt-8" style="font-size:0.92rem;">
           Beserta keluarga besar
         </p>
       </div>
@@ -615,11 +634,16 @@
   </main>
 
   <!-- ── Floating Music Toggle ──────────────────────────────── -->
+  <div id="youtube-player" class="sr-only" aria-hidden="true"></div>
+
   <button
     id="music-toggle"
+    type="button"
     aria-label="Putar musik latar"
     title="Putar Musik"
   >♪</button>
+
+  <p id="ui-status" class="sr-only" aria-live="polite" aria-atomic="true"></p>
 
   <script src="js/script.js"></script>
 </body>

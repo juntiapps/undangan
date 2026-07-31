@@ -58,6 +58,7 @@
     closingGroomName: document.getElementById('cfg-closing-groom-name'),
     closingBrideName: document.getElementById('cfg-closing-bride-name'),
     footerBranding: document.getElementById('cfg-footer-branding'),
+    youtubeVideoId: document.getElementById('cfg-youtube-video-id'),
     giftBank1: document.getElementById('cfg-gift-bank-1'),
     giftName1: document.getElementById('cfg-gift-name-1'),
     giftNumber1: document.getElementById('cfg-gift-number-1'),
@@ -183,6 +184,7 @@
     configFields.closingGroomName.value = branding.closingGroomName || '';
     configFields.closingBrideName.value = branding.closingBrideName || '';
     configFields.footerBranding.value = branding.footerBranding || '';
+    configFields.youtubeVideoId.value = branding.youtubeVideoId || '';
 
     configFields.giftBank1.value = gifts.account1Bank || '';
     configFields.giftName1.value = gifts.account1Name || '';
@@ -248,6 +250,7 @@
         closingGroomName: configFields.closingGroomName.value,
         closingBrideName: configFields.closingBrideName.value,
         footerBranding: configFields.footerBranding.value,
+        youtubeVideoId: configFields.youtubeVideoId.value,
       },
       gifts: {
         account1Bank: configFields.giftBank1.value,
