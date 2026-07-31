@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Undangan Pernikahan Ahmad Fauzan Maulana & Nurul Hidayah Putri — 15 Maret 2025" />
-  <meta property="og:title" content="Undangan Pernikahan — Ahmad & Nurul" />
-  <meta property="og:description" content="Dengan memohon rahmat dan ridha Allah SWT, kami mengundang Bapak/Ibu/Saudara/i untuk hadir." />
+  <meta id="meta-description" name="description" content="Undangan Pernikahan Ahmad Fauzan Maulana & Nurul Hidayah Putri — 15 Maret 2025" />
+  <meta id="meta-og-title" property="og:title" content="Undangan Pernikahan — Ahmad & Nurul" />
+  <meta id="meta-og-description" property="og:description" content="Dengan memohon rahmat dan ridha Allah SWT, kami mengundang Bapak/Ibu/Saudara/i untuk hadir." />
   <meta property="og:type" content="website" />
-  <title>Undangan Pernikahan | Ahmad &amp; Nurul</title>
+  <title id="page-title">Undangan Pernikahan | Farah &amp; Arief</title>
 
   <!-- Google Fonts: Amiri for Arabic text -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -32,7 +32,7 @@
       <div class="terminal-body">
         <div class="terminal-line">
           <span class="prompt">user@wedding:~$</span>
-          <span class="cmd">git clone https://heaven.islam/nikah/ahmad-nurul.git</span>
+          <span class="cmd" id="loader-clone-cmd">git clone https://heaven.islam/nikah/ahmad-nurul.git</span>
         </div>
         <div class="terminal-line">
           <span class="output">Cloning into 'undangan-pernikahan'...</span>
@@ -96,20 +96,20 @@
       <p class="hero-subtitle">&lt;UndanganPernikahan&gt;</p>
 
       <div class="hero-names" id="hero-heading">
-        <span class="groom-name">Ahmad Fauzan<span class="name-suffix"> S.Kom</span></span>
+        <span class="groom-name"><span id="hero-groom-name">Ahmad Fauzan</span><span class="name-suffix" id="hero-groom-suffix"> S.Kom</span></span>
         <span class="ampersand">&amp;</span>
-        <span class="bride-name">Nurul Hidayah<span class="name-suffix"> S.T.</span></span>
+        <span class="bride-name"><span id="hero-bride-name">Nurul Hidayah</span><span class="name-suffix" id="hero-bride-suffix"> S.T.</span></span>
       </div>
 
       <p class="hero-subtitle">&lt;/UndanganPernikahan&gt;</p>
 
-      <div class="hero-date-badge" aria-label="Tanggal pernikahan: Sabtu, 15 Maret 2025">
+      <div class="hero-date-badge" id="hero-date-badge" aria-label="Tanggal pernikahan: Sabtu, 15 Maret 2025">
         <span>📅</span>
-        <span>Sabtu</span>
+        <span id="hero-day-label">Sabtu</span>
         <span class="sep">/</span>
-        <span>15.03.2025</span>
+        <span id="hero-date-label">15.03.2025</span>
         <span class="sep">/</span>
-        <span>Bandung</span>
+        <span id="hero-city-label">Bandung</span>
       </div>
 
       <a href="#couple" class="hero-cta-btn" aria-label="Buka undangan">
@@ -152,10 +152,10 @@
         <article class="couple-card groom" aria-label="Mempelai pria">
           <div class="couple-avatar" aria-hidden="true">👨‍💻</div>
           <p class="couple-role">// Mempelai Pria</p>
-          <p class="couple-name-ar" lang="ar">أحمد فوزان مولانا</p>
-          <h3 class="couple-name-id">Ahmad Fauzan Maulana</h3>
-          <p class="couple-degree">S.Kom — Backend Engineer</p>
-          <p class="couple-parents">
+          <!-- <p class="couple-name-ar" lang="ar">أحمد فوزان مولانا</p> -->
+          <h3 class="couple-name-id" id="couple-groom-name">Ahmad Fauzan Maulana</h3>
+          <p class="couple-degree" id="couple-groom-profession">S.Kom — Backend Engineer</p>
+          <p class="couple-parents" id="couple-groom-parents">
             Putra pertama dari<br />
             Bapak H. Muhamad Ridwan<br />
             &amp; Ibu Hj. Siti Aminah
@@ -173,10 +173,10 @@
         <article class="couple-card bride" aria-label="Mempelai wanita">
           <div class="couple-avatar" aria-hidden="true">👩‍💻</div>
           <p class="couple-role">// Mempelai Wanita</p>
-          <p class="couple-name-ar" lang="ar">نور الهداية فوتري</p>
-          <h3 class="couple-name-id">Nurul Hidayah Putri</h3>
-          <p class="couple-degree">S.T. — Cloud Infrastructure Engineer</p>
-          <p class="couple-parents">
+          <!-- <p class="couple-name-ar" lang="ar">نور الهداية فوتري</p> -->
+          <h3 class="couple-name-id" id="couple-bride-name">Nurul Hidayah Putri</h3>
+          <p class="couple-degree" id="couple-bride-profession">S.T. — Cloud Infrastructure Engineer</p>
+          <p class="couple-parents" id="couple-bride-parents">
             Putri pertama dari<br />
             Bapak H. Agus Setiawan<br />
             &amp; Ibu Hj. Nuraini
@@ -208,7 +208,7 @@
             <span class="ln">5</span><span class="punc">}</span><br />
             <span class="ln">6</span><br />
             <span class="ln">7</span><span class="kw">const</span> <span class="cls">wedding</span><span class="op">:</span> <span class="cls">WeddingConfig</span> <span class="op">=</span> <span class="punc">{</span><br />
-            <span class="ln">8</span>&nbsp;&nbsp;<span class="prop">couple</span><span class="op">:</span> <span class="punc">[</span><span class="str">"Ahmad Fauzan"</span><span class="punc">,</span> <span class="str">"Nurul Hidayah"</span><span class="punc">],</span><br />
+            <span class="ln">8</span>&nbsp;&nbsp;<span class="prop">couple</span><span class="op">:</span> <span class="punc">[</span><span class="str">"<span id="code-groom-name">Ahmad Fauzan</span>"</span><span class="punc">,</span> <span class="str">"<span id="code-bride-name">Nurul Hidayah</span>"</span><span class="punc">],</span><br />
             <span class="ln">9</span>&nbsp;&nbsp;<span class="prop">date</span><span class="op">:</span> <span class="kw">new</span> <span class="fn">Date</span><span class="punc">(</span><span class="str">"2025-03-15"</span><span class="punc">),</span><br />
             <span class="ln">10</span>&nbsp;&nbsp;<span class="prop">status</span><span class="op">:</span> <span class="str">"sakinah_mawaddah_warahmah"</span><span class="punc">,</span><br />
             <span class="ln">11</span>&nbsp;&nbsp;<span class="prop">blessed</span><span class="op">:</span> <span class="kw">true</span><span class="punc">,</span><br />
@@ -241,22 +241,22 @@
           <div class="event-detail-row">
             <span class="event-icon">📅</span>
             <span class="event-detail-label">date:</span>
-            <span class="event-detail-value">Sabtu, 15 Maret 2025</span>
+            <span class="event-detail-value" id="akad-date">Sabtu, 15 Maret 2025</span>
           </div>
           <div class="event-detail-row">
             <span class="event-icon">🕘</span>
             <span class="event-detail-label">time:</span>
-            <span class="event-detail-value">08.00 — 10.00 WIB</span>
+            <span class="event-detail-value" id="akad-time">08.00 — 10.00 WIB</span>
           </div>
           <div class="event-detail-row">
             <span class="event-icon">📍</span>
             <span class="event-detail-label">location:</span>
-            <span class="event-detail-value">Masjid Al-Ikhlas<br />Jl. Raya Cibiru No. 12, Bandung</span>
+            <span class="event-detail-value" id="akad-event-location">Masjid Al-Ikhlas<br />Jl. Raya Cibiru No. 12, Bandung</span>
           </div>
           <div class="event-detail-row">
             <span class="event-icon">👔</span>
             <span class="event-detail-label">dresscode:</span>
-            <span class="event-detail-value">Busana Muslim / Islami</span>
+            <span class="event-detail-value" id="akad-dresscode">Busana Muslim / Islami</span>
           </div>
         </article>
 
@@ -269,22 +269,22 @@
           <div class="event-detail-row">
             <span class="event-icon">📅</span>
             <span class="event-detail-label">date:</span>
-            <span class="event-detail-value">Sabtu, 15 Maret 2025</span>
+            <span class="event-detail-value" id="resepsi-date">Sabtu, 15 Maret 2025</span>
           </div>
           <div class="event-detail-row">
             <span class="event-icon">🕑</span>
             <span class="event-detail-label">time:</span>
-            <span class="event-detail-value">11.00 — 15.00 WIB</span>
+            <span class="event-detail-value" id="resepsi-time">11.00 — 15.00 WIB</span>
           </div>
           <div class="event-detail-row">
             <span class="event-icon">📍</span>
             <span class="event-detail-label">location:</span>
-            <span class="event-detail-value">Aula Gedung Serbaguna<br />Jl. Cihampelas No. 88, Bandung</span>
+            <span class="event-detail-value" id="resepsi-event-location">Aula Gedung Serbaguna<br />Jl. Cihampelas No. 88, Bandung</span>
           </div>
           <div class="event-detail-row">
             <span class="event-icon">👗</span>
             <span class="event-detail-label">dresscode:</span>
-            <span class="event-detail-value">Busana Muslim — Hijau / Tosca</span>
+            <span class="event-detail-value" id="resepsi-dresscode">Busana Muslim — Hijau / Tosca</span>
           </div>
         </article>
 
@@ -319,7 +319,7 @@
         </div>
       </div>
 
-      <p class="countdown-note">// Menuju hari bahagia 15 Maret 2025 — Insya Allah</p>
+      <p class="countdown-note" id="countdown-note">// Menuju hari bahagia 15 Maret 2025 — Insya Allah</p>
     </section>
 
     <hr class="section-divider" />
@@ -338,16 +338,17 @@
             <div class="location-icon" aria-hidden="true">🕌</div>
             <div>
               <p class="location-title">// Akad Nikah</p>
-              <p class="location-name">Masjid Al-Ikhlas</p>
+              <p class="location-name" id="akad-location-name">Masjid Al-Ikhlas</p>
             </div>
           </div>
-          <p class="location-address">
+          <p class="location-address" id="akad-location-address">
             Jl. Raya Cibiru No. 12<br />
             Cibiru, Bandung<br />
             Jawa Barat 40615
           </p>
           <a
             class="map-btn"
+            id="akad-map-link"
             href="https://maps.google.com/?q=Masjid+Al-Ikhlas+Cibiru+Bandung"
             target="_blank"
             rel="noopener noreferrer"
@@ -362,16 +363,17 @@
             <div class="location-icon" aria-hidden="true">🏛️</div>
             <div>
               <p class="location-title">// Resepsi</p>
-              <p class="location-name">Aula Gedung Serbaguna</p>
+              <p class="location-name" id="resepsi-location-name">Aula Gedung Serbaguna</p>
             </div>
           </div>
-          <p class="location-address">
+          <p class="location-address" id="resepsi-location-address">
             Jl. Cihampelas No. 88<br />
             Cidadap, Bandung<br />
             Jawa Barat 40141
           </p>
           <a
             class="map-btn"
+            id="resepsi-map-link"
             href="https://maps.google.com/?q=Jl+Cihampelas+88+Bandung"
             target="_blank"
             rel="noopener noreferrer"
@@ -515,18 +517,18 @@
 
       <div class="gift-cards reveal">
         <div class="gift-card">
-          <p class="gift-bank">// Bank BCA</p>
-          <p class="gift-account-name">Ahmad Fauzan Maulana</p>
-          <p class="gift-account-num">1234 5678 9012</p>
-          <button class="copy-btn" data-copy="1234567890 12" aria-label="Salin nomor rekening BCA">
+          <p class="gift-bank" id="gift-bank-1">// Bank BCA</p>
+          <p class="gift-account-name" id="gift-account-name-1">Ahmad Fauzan Maulana</p>
+          <p class="gift-account-num" id="gift-account-num-1">1234 5678 9012</p>
+          <button class="copy-btn" id="gift-copy-btn-1" data-copy="123456789012" aria-label="Salin nomor rekening BCA">
             ⎘ Salin Nomor
           </button>
         </div>
         <div class="gift-card">
-          <p class="gift-bank">// Bank Mandiri</p>
-          <p class="gift-account-name">Nurul Hidayah Putri</p>
-          <p class="gift-account-num">9876 5432 1098</p>
-          <button class="copy-btn" data-copy="987654321098" aria-label="Salin nomor rekening Mandiri">
+          <p class="gift-bank" id="gift-bank-2">// Bank Mandiri</p>
+          <p class="gift-account-name" id="gift-account-name-2">Nurul Hidayah Putri</p>
+          <p class="gift-account-num" id="gift-account-num-2">9876 5432 1098</p>
+          <button class="copy-btn" id="gift-copy-btn-2" data-copy="987654321098" aria-label="Salin nomor rekening Mandiri">
             ⎘ Salin Nomor
           </button>
         </div>
@@ -557,9 +559,9 @@
       <div class="closing-ttd">
         <p>Kami yang berbahagia,</p>
         <p class="ttd-names">
-          <span>Ahmad Fauzan Maulana</span>
+          <span id="closing-groom-name">Ahmad Fauzan Maulana</span>
           &amp;
-          <span>Nurul Hidayah Putri</span>
+          <span id="closing-bride-name">Nurul Hidayah Putri</span>
         </p>
         <p class="text-muted mt-8" style="font-size:0.78rem;">
           Beserta keluarga besar
@@ -598,14 +600,15 @@
     <footer role="contentinfo">
       <p>
         Made with ❤️ &amp; <span class="text-green">Consolas</span> font ·
-        <a href="#hero">Kembali ke atas ↑</a>
+        <a href="#hero">Kembali ke atas ↑</a> ·
+        <a href="/admin">Admin RSVP</a>
       </p>
       <p class="footer-git">
         <span class="text-green">⎇ main</span>
         <span>·</span>
         <span>commit <span class="text-yellow">bismillah</span></span>
         <span>·</span>
-        <span class="text-muted">Ahmad &amp; Nurul Wedding © 2025</span>
+        <span class="text-muted" id="footer-branding">Ahmad &amp; Nurul Wedding © 2025</span>
       </p>
     </footer>
 

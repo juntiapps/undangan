@@ -84,17 +84,153 @@
 
   revealEls.forEach(el => observer.observe(el));
 
+  function escapeHtml(value) {
+    return String(value)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  function nlToBr(value) {
+    return escapeHtml(value).replace(/\n/g, '<br />');
+  }
+
+  function setText(id, value) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.textContent = String(value || '');
+  }
+
+  function setHtmlFromMultiline(id, value) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.innerHTML = nlToBr(String(value || ''));
+  }
+
+  function setHref(id, value) {
+    const el = document.getElementById(id);
+    if (!el || !value) return;
+    el.setAttribute('href', value);
+  }
+
+  function setMeta(id, content) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.setAttribute('content', String(content || ''));
+  }
+
+  function setDataAttribute(id, key, value) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.setAttribute(`data-${key}`, String(value || ''));
+  }
+
+  async function fetchSiteConfig() {
+    const response = await fetch('/api/config');
+    if (!response.ok) {
+      throw new Error('Gagal mengambil konfigurasi undangan');
+    }
+
+    const payload = await response.json();
+    return payload.data || null;
+  }
+
   /* ─── Countdown timer ─────────────────────────────────────── */
-  const WEDDING_DATE = new Date('2025-03-15T09:00:00');
+  let weddingDate = new Date('2025-03-15T09:00:00');
+  let countdownExpiredNote = '// Barakallahu lakuma wa baraka alaikuma wa jama\'a bainakuma fi khair';
+
+  function applySiteConfig(config) {
+    if (!config) return;
+
+    const couple = config.couple || {};
+    const hero = config.hero || {};
+    const events = config.events || {};
+    const locations = config.locations || {};
+    const gifts = config.gifts || {};
+    const branding = config.branding || {};
+
+    setText('hero-groom-name', couple.groomShortName);
+    setText('hero-groom-suffix', couple.groomSuffix ? ` ${couple.groomSuffix}` : '');
+    setText('hero-bride-name', couple.brideShortName);
+    setText('hero-bride-suffix', couple.brideSuffix ? ` ${couple.brideSuffix}` : '');
+    setText('couple-groom-name', couple.groomName);
+    setText('couple-bride-name', couple.brideName);
+    setText('couple-groom-profession', couple.groomProfession);
+    setHtmlFromMultiline('couple-groom-parents', couple.groomParents);
+    setText('couple-bride-profession', couple.brideProfession);
+    setHtmlFromMultiline('couple-bride-parents', couple.brideParents);
+
+    setText('hero-day-label', hero.dayLabel);
+    setText('hero-date-label', hero.dateLabel);
+    setText('hero-city-label', hero.cityLabel);
+    setText('countdown-note', hero.countdownNote);
+    if (hero.countdownExpiredNote) {
+      countdownExpiredNote = hero.countdownExpiredNote;
+    }
+    setText('loader-clone-cmd', branding.loaderCloneCommand);
+
+    const heroDateBadge = document.getElementById('hero-date-badge');
+    if (heroDateBadge && branding.heroDateAriaLabel) {
+      heroDateBadge.setAttribute('aria-label', branding.heroDateAriaLabel);
+    }
+
+    if (branding.pageTitle) {
+      document.title = branding.pageTitle;
+    }
+    setMeta('meta-description', branding.metaDescription);
+    setMeta('meta-og-title', branding.ogTitle);
+    setMeta('meta-og-description', branding.ogDescription);
+
+    setText('akad-date', events.akadDate);
+    setText('akad-time', events.akadTime);
+    setHtmlFromMultiline('akad-event-location', events.akadLocation);
+    setText('akad-dresscode', events.akadDresscode);
+
+    setText('resepsi-date', events.resepsiDate);
+    setText('resepsi-time', events.resepsiTime);
+    setHtmlFromMultiline('resepsi-event-location', events.resepsiLocation);
+    setText('resepsi-dresscode', events.resepsiDresscode);
+
+    setText('akad-location-name', locations.akadName);
+    setHtmlFromMultiline('akad-location-address', locations.akadAddress);
+    setHref('akad-map-link', locations.akadMapUrl);
+
+    setText('resepsi-location-name', locations.resepsiName);
+    setHtmlFromMultiline('resepsi-location-address', locations.resepsiAddress);
+    setHref('resepsi-map-link', locations.resepsiMapUrl);
+
+    setText('gift-bank-1', gifts.account1Bank ? `// ${gifts.account1Bank}` : '');
+    setText('gift-account-name-1', gifts.account1Name || branding.giftAccountName1);
+    setText('gift-account-num-1', gifts.account1Number);
+    setDataAttribute('gift-copy-btn-1', 'copy', gifts.account1CopyValue || gifts.account1Number || '');
+
+    setText('gift-bank-2', gifts.account2Bank ? `// ${gifts.account2Bank}` : '');
+    setText('gift-account-name-2', gifts.account2Name || branding.giftAccountName2);
+    setText('gift-account-num-2', gifts.account2Number);
+    setDataAttribute('gift-copy-btn-2', 'copy', gifts.account2CopyValue || gifts.account2Number || '');
+
+    setText('closing-groom-name', branding.closingGroomName);
+    setText('closing-bride-name', branding.closingBrideName);
+    setText('footer-branding', branding.footerBranding);
+    setText('code-groom-name', branding.codeGroomName);
+    setText('code-bride-name', branding.codeBrideName);
+
+    const parsedDate = new Date(hero.countdownDateIso);
+    if (!Number.isNaN(parsedDate.getTime())) {
+      weddingDate = parsedDate;
+    }
+  }
 
   function updateCountdown() {
     const now  = new Date();
-    const diff = WEDDING_DATE - now;
+    const diff = weddingDate - now;
 
     if (diff <= 0) {
       document.querySelectorAll('.countdown-num').forEach(el => { el.textContent = '00'; });
       const note = document.querySelector('.countdown-note');
-      if (note) note.textContent = '// Barakallahu lakuma wa baraka alaikuma wa jama\'a bainakuma fi khair';
+      if (note) note.textContent = countdownExpiredNote;
       return;
     }
 
@@ -115,6 +251,15 @@
     if (elMinutes) elMinutes.textContent = pad(minutes);
     if (elSeconds) elSeconds.textContent = pad(seconds);
   }
+
+  fetchSiteConfig()
+    .then((config) => {
+      applySiteConfig(config);
+      updateCountdown();
+    })
+    .catch(() => {
+      // Keep static fallback from HTML when config is unavailable.
+    });
 
   updateCountdown();
   setInterval(updateCountdown, 1000);
@@ -156,23 +301,65 @@
   /* ─── RSVP Form ───────────────────────────────────────────── */
   const rsvpForm    = document.getElementById('rsvp-form');
   const rsvpSuccess = document.getElementById('rsvp-success');
+  const rsvpSubmit  = rsvpForm ? rsvpForm.querySelector('button[type="submit"]') : null;
+
+  async function fetchRsvps() {
+    const response = await fetch('/api/rsvp');
+    if (!response.ok) {
+      throw new Error('Gagal mengambil data RSVP');
+    }
+
+    const payload = await response.json();
+    return Array.isArray(payload.data) ? payload.data : [];
+  }
+
+  async function createRsvp(data) {
+    const response = await fetch('/api/rsvp', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
+
+    const payload = await response.json();
+    if (!response.ok) {
+      throw new Error(payload.error || 'Gagal menyimpan RSVP');
+    }
+
+    return payload.data;
+  }
 
   if (rsvpForm) {
-    rsvpForm.addEventListener('submit', e => {
+    rsvpForm.addEventListener('submit', async e => {
       e.preventDefault();
       const name    = document.getElementById('rsvp-name').value.trim();
       const attend  = document.getElementById('rsvp-attend').value;
-      const guests  = document.getElementById('rsvp-guests').value;
+      const guests  = Number(document.getElementById('rsvp-guests').value || 1);
       const message = document.getElementById('rsvp-message').value.trim();
 
       if (!name || !attend) return;
 
-      // Store wish locally and display it
-      addWish({ name, attend, message, time: new Date() });
+      const originalButtonText = rsvpSubmit ? rsvpSubmit.textContent : null;
+      if (rsvpSubmit) {
+        rsvpSubmit.disabled = true;
+        rsvpSubmit.textContent = '$ posting --rsvp';
+      }
 
-      rsvpForm.reset();
-      rsvpForm.style.display = 'none';
-      if (rsvpSuccess) rsvpSuccess.style.display = 'block';
+      try {
+        const saved = await createRsvp({ name, attend, guests, message });
+        addWish(saved, true);
+
+        rsvpForm.reset();
+        rsvpForm.style.display = 'none';
+        if (rsvpSuccess) rsvpSuccess.style.display = 'block';
+      } catch (err) {
+        const errorText = err instanceof Error ? err.message : 'Terjadi kesalahan saat kirim RSVP.';
+        window.alert(errorText);
+      } finally {
+        if (rsvpSubmit) {
+          rsvpSubmit.disabled = false;
+          rsvpSubmit.textContent = originalButtonText;
+        }
+      }
     });
   }
 
@@ -184,8 +371,9 @@
     { name: 'Sari Indah', attend: 'hadir', message: 'Selamat menempuh hidup baru! Semoga servernya uptime 100% dan connection-nya tidak pernah lost 💑', time: new Date(Date.now() - 3600000 * 12) },
   ];
 
-  function formatTimeAgo(date) {
-    const diff = Date.now() - date;
+  function formatTimeAgo(dateLike) {
+    const date = new Date(dateLike);
+    const diff = Date.now() - date.getTime();
     const mins  = Math.floor(diff / 60000);
     const hours = Math.floor(diff / 3600000);
     const days  = Math.floor(diff / 86400000);
@@ -195,30 +383,57 @@
     return 'just now';
   }
 
-  function addWish(wish) {
+  function addWish(wish, prepend = true) {
     const list = document.getElementById('wishes-list');
     if (!list) return;
+
+    const safeName = escapeHtml(wish.name || 'Tamu');
+    const safeMessage = escapeHtml(wish.message || '');
+    const commitId = wish.id ? String(wish.id).slice(-7) : Math.random().toString(16).slice(2, 9);
 
     const el = document.createElement('div');
     el.className = 'wish-item';
     el.innerHTML = `
       <div class="wish-meta">
-        <span class="wish-name">@${wish.name.replace(/\s/g, '_').toLowerCase()}</span>
+        <span class="wish-name">@${safeName.replace(/\s/g, '_').toLowerCase()}</span>
         <span class="wish-status ${wish.attend === 'hadir' ? 'hadir' : 'tidak'}">${wish.attend === 'hadir' ? '✓ Hadir' : '✗ Tidak Hadir'}</span>
       </div>
-      ${wish.message ? `<p class="wish-text">${wish.message}</p>` : ''}
+      ${safeMessage ? `<p class="wish-text">${safeMessage}</p>` : ''}
       <div class="wish-commit">
         <span>⎇</span>
-        <span>commit ${Math.random().toString(16).slice(2, 9)}</span>
+        <span>commit ${escapeHtml(commitId)}</span>
         <span>·</span>
-        <span>${formatTimeAgo(wish.time)}</span>
+        <span>${formatTimeAgo(wish.createdAt || wish.time)}</span>
       </div>
     `;
 
-    list.prepend(el);
+    if (prepend) {
+      list.prepend(el);
+      return;
+    }
+    list.appendChild(el);
   }
 
-  seedWishes.forEach(w => addWish(w));
+  async function initWishes() {
+    const list = document.getElementById('wishes-list');
+    if (!list) return;
+
+    list.innerHTML = '';
+
+    try {
+      const items = await fetchRsvps();
+      if (items.length === 0) {
+        seedWishes.forEach(w => addWish(w, false));
+        return;
+      }
+
+      items.forEach(item => addWish(item, false));
+    } catch {
+      seedWishes.forEach(w => addWish(w, false));
+    }
+  }
+
+  initWishes();
 
   /* ─── Music toggle placeholder ────────────────────────────── */
   const musicBtn = document.getElementById('music-toggle');
