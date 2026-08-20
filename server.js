@@ -513,6 +513,9 @@ app.get('/api/rsvp', async (_req, res) => {
 });
 
 app.get('/api/config', async (_req, res) => {
+  res.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+  res.set('Pragma', 'no-cache');
+  res.set('Expires', '0');
   const config = await getSiteConfig();
   res.json({ data: config });
 });
@@ -524,6 +527,9 @@ app.get('/api/admin/rsvps', async (req, res) => {
 });
 
 app.get('/api/admin/config', async (_req, res) => {
+  res.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+  res.set('Pragma', 'no-cache');
+  res.set('Expires', '0');
   const config = await getSiteConfig();
   res.json({ data: config });
 });
@@ -531,6 +537,7 @@ app.get('/api/admin/config', async (_req, res) => {
 app.put('/api/admin/config', async (req, res) => {
   const normalized = normalizeSiteConfig(req.body);
   await saveSiteConfig(normalized);
+  res.set('Cache-Control', 'no-store');
   res.json({ message: 'Konfigurasi undangan tersimpan.', data: normalized });
 });
 
