@@ -19,6 +19,7 @@ const ADMIN_PASS = process.env.ADMIN_PASS || 'change-me';
 const ADMIN_API_TOKEN = String(process.env.ADMIN_API_TOKEN || '').trim();
 
 const DEFAULT_SITE_CONFIG = {
+  published: true,
   couple: {
     groomName: 'Ahmad Fauzan Maulana',
     groomShortName: 'Ahmad Fauzan',
@@ -198,6 +199,7 @@ function normalizeSiteConfig(payload) {
   const cityLabel = cleanText(hero.cityLabel, 60) || DEFAULT_SITE_CONFIG.hero.cityLabel;
 
   return {
+    published: source.published !== false,
     couple: {
       groomName,
       groomShortName,

@@ -169,6 +169,40 @@ body {
   box-shadow: 0 0 40px rgba(0, 212, 170, 0.15);
 }
 
+#loading-screen.coming-soon-active .terminal-body {
+  display: none;
+}
+
+.coming-soon-message {
+  display: grid;
+  gap: 0.65rem;
+  justify-items: center;
+  padding: 2.5rem 2rem;
+  color: var(--text-primary);
+  text-align: center;
+}
+
+.coming-soon-message[hidden] {
+  display: none;
+}
+
+.coming-soon-code {
+  color: var(--accent-yellow);
+  font: 0.85rem Consolas, monospace;
+  letter-spacing: 0.12em;
+}
+
+.coming-soon-message strong {
+  color: var(--accent-green);
+  font: 700 clamp(1.5rem, 6vw, 2.4rem) Consolas, monospace;
+  letter-spacing: 0.08em;
+}
+
+.coming-soon-message span:last-child {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
 .terminal-titlebar {
   background: var(--bg-line);
   padding: 10px 16px;

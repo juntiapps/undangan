@@ -15,6 +15,7 @@
   const statGuests = document.getElementById('stat-guests');
 
   const configFields = {
+    published: document.getElementById('cfg-published'),
     groomName: document.getElementById('cfg-groom-name'),
     groomShortName: document.getElementById('cfg-groom-short'),
     groomSuffix: document.getElementById('cfg-groom-suffix'),
@@ -137,6 +138,7 @@
     const branding = config.branding || {};
     const gifts = config.gifts || {};
 
+    configFields.published.checked = config.published !== false;
     configFields.groomName.value = couple.groomName || '';
     configFields.groomShortName.value = couple.groomShortName || '';
     configFields.groomSuffix.value = couple.groomSuffix || '';
@@ -198,6 +200,7 @@
 
   function collectConfigFromForm() {
     return {
+      published: configFields.published.checked,
       couple: {
         groomName: configFields.groomName.value,
         groomShortName: configFields.groomShortName.value,

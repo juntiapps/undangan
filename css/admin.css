@@ -100,6 +100,28 @@ button:hover,
   font-size: 0.92rem;
 }
 
+.publish-toggle {
+  display: inline-flex !important;
+  flex-direction: row !important;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px !important;
+  color: var(--text) !important;
+  font-weight: 600;
+}
+
+.publish-toggle input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--primary);
+}
+
+.publish-toggle .field-help {
+  flex-basis: 100%;
+  margin-left: 26px;
+  font-weight: 400;
+}
+
 .settings-form {
   display: grid;
   gap: 12px;

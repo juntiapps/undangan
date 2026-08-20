@@ -130,19 +130,38 @@
   /* ─── Loading screen ──────────────────────────────────────── */
   const loadingScreen = document.getElementById("loading-screen");
   const mainContent = document.getElementById("main-content");
+  const comingSoonMessage = document.getElementById("coming-soon-message");
+  let isPublished = true;
+  let configLoaded = false;
+  let loadingDelayComplete = false;
+
+  function updateLoadingScreen() {
+    if (!loadingScreen || !mainContent) return;
+
+    if (!isPublished) {
+      loadingScreen.setAttribute("aria-label", "Coming Soon");
+      loadingScreen.classList.add("coming-soon-active");
+      if (comingSoonMessage) comingSoonMessage.hidden = false;
+      return;
+    }
+
+    if (!configLoaded || !loadingDelayComplete) return;
+    loadingScreen.classList.add("fade-out");
+    window.setTimeout(() => {
+      loadingScreen.style.display = "none";
+      mainContent.style.opacity = "1";
+    }, 600);
+  }
 
   if (loadingScreen && mainContent) {
     // Hide main content until loading done
     mainContent.style.opacity = "0";
     mainContent.style.transition = "opacity 0.6s ease";
 
-    // After animation completes (~3.8 s) dismiss loader
-    setTimeout(() => {
-      loadingScreen.classList.add("fade-out");
-      setTimeout(() => {
-        loadingScreen.style.display = "none";
-        mainContent.style.opacity = "1";
-      }, 600);
+    // Wait for config so unpublished invitations remain on the loader.
+    window.setTimeout(() => {
+      loadingDelayComplete = true;
+      updateLoadingScreen();
     }, 4200);
   }
 
@@ -249,6 +268,9 @@
 
   function applySiteConfig(config) {
     if (!config) return;
+
+    isPublished = config.published !== false;
+    updateLoadingScreen();
 
     const couple = config.couple || {};
     const hero = config.hero || {};
@@ -436,6 +458,8 @@
       // Keep static fallback from HTML when config is unavailable.
     })
     .finally(() => {
+      configLoaded = true;
+      updateLoadingScreen();
       initMusicToggle();
     });
 
