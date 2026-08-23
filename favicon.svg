@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Undangan Pernikahan">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0ea5e9" />
+      <stop offset="100%" stop-color="#22c55e" />
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="16" fill="#07111f" />
+  <circle cx="32" cy="32" r="22" fill="url(#g)" opacity="0.18" />
+  <path d="M21 25h22v4H21zM21 31h22v4H21zM21 37h14v4H21z" fill="#e2e8f0" />
+  <path d="M17 20h30c1.1 0 2 .9 2 2v20c0 1.1-.9 2-2 2H17c-1.1 0-2-.9-2-2V22c0-1.1.9-2 2-2zm0 4v18h30V24l-15 10-15-10zm15 8L17 24v18h30V24L32 32z" fill="url(#g)" />
+</svg>
