@@ -8,6 +8,21 @@
   const saveConfigBtn = document.getElementById('save-config-btn');
   const savePreviewBtn = document.getElementById('save-preview-btn');
   const configState = document.getElementById('config-state');
+  const previewFrame = document.getElementById('preview-frame');
+  const previewRefreshBtn = document.getElementById('preview-refresh-btn');
+  const previewScreen = document.querySelector('.mobile-mockup-screen');
+
+  function updatePreviewScale() {
+    if (!previewScreen) return;
+    const scale = previewScreen.clientWidth / 375;
+    previewScreen.style.setProperty('--mockup-scale', String(scale));
+  }
+
+  function reloadPreview() {
+    if (!previewFrame) return;
+    // Force reload by re-setting src (cache-bust so latest config is fetched).
+    previewFrame.src = `/?preview=${Date.now()}`;
+  }
 
   const statTotal = document.getElementById('stat-total');
   const statHadir = document.getElementById('stat-hadir');
@@ -317,6 +332,7 @@
 
       assignConfigToForm(payload.data || {});
       setConfigState(payload.message || 'Pengaturan tersimpan.', false);
+      reloadPreview();
 
       if (shouldPreview) {
         window.open('/', '_blank', 'noopener');
@@ -355,6 +371,13 @@
   refreshBtn.addEventListener('click', loadRsvps);
   if (configForm) {
     configForm.addEventListener('submit', saveSiteConfig);
+  }
+  if (previewRefreshBtn) {
+    previewRefreshBtn.addEventListener('click', reloadPreview);
+  }
+  if (previewScreen) {
+    updatePreviewScale();
+    window.addEventListener('resize', updatePreviewScale);
   }
 
   loadSiteConfig();

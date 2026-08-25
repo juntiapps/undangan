@@ -81,12 +81,93 @@ button:hover,
   margin-bottom: 16px;
 }
 
+.settings-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: 16px;
+  align-items: start;
+  margin-bottom: 16px;
+}
+
 .settings-card {
   background: var(--card);
   border: 1px solid var(--line);
   border-radius: 14px;
   padding: 16px;
-  margin-bottom: 16px;
+  margin-bottom: 0;
+}
+
+.preview-panel {
+  position: sticky;
+  top: 16px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.preview-panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.preview-panel-head h2 {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.preview-panel-head button {
+  padding: 6px 10px;
+  font-size: 0.85rem;
+}
+
+.mobile-mockup {
+  position: relative;
+  width: 100%;
+  max-width: 300px;
+  margin: 0 auto;
+  aspect-ratio: 9 / 18.5;
+  background: #111;
+  border-radius: 32px;
+  padding: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+  overflow: hidden;
+}
+
+.mobile-mockup-notch {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40%;
+  height: 18px;
+  background: #111;
+  border-radius: 0 0 12px 12px;
+  z-index: 2;
+}
+
+.mobile-mockup-screen {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 22px;
+  background: #fff;
+}
+
+.mobile-mockup iframe {
+  /* Render at a real mobile viewport width, then scale to fit the frame so no content is clipped. */
+  width: 375px;
+  height: 812px;
+  border: none;
+  background: #fff;
+  transform-origin: top left;
+  transform: scale(calc(var(--mockup-scale, 0.8)));
 }
 
 .settings-head h2 {
@@ -125,6 +206,22 @@ button:hover,
 .settings-form {
   display: grid;
   gap: 12px;
+}
+
+.form-section {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 14px 14px 4px;
+  margin: 0 0 4px;
+}
+
+.form-section legend {
+  padding: 0 6px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--primary);
 }
 
 .field-grid {
@@ -279,5 +376,18 @@ td.message {
   .admin-header {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .settings-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .preview-panel {
+    position: static;
+    order: -1;
+  }
+
+  .mobile-mockup {
+    max-width: 240px;
   }
 }

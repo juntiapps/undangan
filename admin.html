@@ -22,6 +22,7 @@
       </div>
     </header>
 
+    <div class="settings-layout">
     <section class="settings-card" aria-label="Pengaturan konten undangan">
       <div class="settings-head">
         <h2>Pengaturan Konten</h2>
@@ -34,193 +35,232 @@
       </div>
 
       <form id="site-config-form" class="settings-form" novalidate>
-        <div class="field-grid two-col">
-          <label>Nama Mempelai Pria
-            <input id="cfg-groom-name" type="text" required />
-          </label>
-          <label>Nama Pendek Pria (Hero)
-            <input id="cfg-groom-short" type="text" required />
-          </label>
-          <label>Gelar Pria
-            <input id="cfg-groom-suffix" type="text" placeholder="S.Kom" />
-          </label>
-          <label>Profesi Pria
-            <input id="cfg-groom-profession" type="text" required />
-          </label>
-          <label>Orang Tua Pria (tiap baris jadi baris baru)
-            <textarea id="cfg-groom-parents" rows="3" required placeholder="Putra pertama dari&#10;Bapak Nama Ayah&#10;Ibu Nama Ibu"></textarea>
-            <small class="field-help">Format 3 baris: keterangan anak, nama ayah, nama ibu.</small>
-          </label>
-          <label>Nama Mempelai Wanita
-            <input id="cfg-bride-name" type="text" required />
-          </label>
-          <label>Nama Pendek Wanita (Hero)
-            <input id="cfg-bride-short" type="text" required />
-          </label>
-          <label>Gelar Wanita
-            <input id="cfg-bride-suffix" type="text" placeholder="S.T." />
-          </label>
-          <label>Profesi Wanita
-            <input id="cfg-bride-profession" type="text" required />
-          </label>
-          <label>Orang Tua Wanita (tiap baris jadi baris baru)
-            <textarea id="cfg-bride-parents" rows="3" required placeholder="Putri pertama dari&#10;Bapak Nama Ayah&#10;Ibu Nama Ibu"></textarea>
-            <small class="field-help">Format 3 baris: keterangan anak, nama ayah, nama ibu.</small>
-          </label>
-        </div>
+        <fieldset class="form-section">
+          <legend>Meta &amp; SEO</legend>
+          <div class="field-grid two-col">
+            <label>Judul Halaman (Title)
+              <input id="cfg-page-title" type="text" required />
+            </label>
+            <label>Meta Description
+              <input id="cfg-meta-description" type="text" required />
+            </label>
+            <label>OG Title
+              <input id="cfg-og-title" type="text" required />
+            </label>
+            <label>OG Description
+              <input id="cfg-og-description" type="text" required />
+            </label>
+          </div>
+        </fieldset>
 
-        <div class="field-grid three-col">
-          <label>Hari (Hero)
-            <input id="cfg-day-label" type="text" required />
-          </label>
-          <label>Tanggal Ringkas (Hero)
-            <input id="cfg-date-label" type="text" required />
-          </label>
-          <label>Kota (Hero)
-            <input id="cfg-city-label" type="text" required />
-          </label>
-        </div>
+        <fieldset class="form-section">
+          <legend>Hero</legend>
+          <div class="field-grid two-col">
+            <label>Nama Pendek Pria (Hero)
+              <input id="cfg-groom-short" type="text" required />
+            </label>
+            <label>Gelar Pria
+              <input id="cfg-groom-suffix" type="text" placeholder="S.Kom" />
+            </label>
+            <label>Nama Pendek Wanita (Hero)
+              <input id="cfg-bride-short" type="text" required />
+            </label>
+            <label>Gelar Wanita
+              <input id="cfg-bride-suffix" type="text" placeholder="S.T." />
+            </label>
+          </div>
+          <div class="field-grid three-col">
+            <label>Hari (Hero)
+              <input id="cfg-day-label" type="text" required />
+            </label>
+            <label>Tanggal Ringkas (Hero)
+              <input id="cfg-date-label" type="text" required />
+            </label>
+            <label>Kota (Hero)
+              <input id="cfg-city-label" type="text" required />
+            </label>
+          </div>
+          <div class="field-grid two-col">
+            <label>Aria Label Badge Tanggal Hero
+              <input id="cfg-hero-aria-label" type="text" required />
+            </label>
+            <label>Loader Command
+              <input id="cfg-loader-command" type="text" required />
+            </label>
+          </div>
+        </fieldset>
 
-        <div class="field-grid two-col">
-          <label>Waktu Countdown (ISO)
-            <input id="cfg-countdown-iso" type="text" placeholder="2026-12-31T09:00:00" required />
-          </label>
-          <label>Catatan Countdown
-            <input id="cfg-countdown-note" type="text" required />
-          </label>
-          <label>Catatan Setelah Countdown Habis
-            <input id="cfg-countdown-expired-note" type="text" required />
-          </label>
-        </div>
+        <fieldset class="form-section">
+          <legend>Mempelai</legend>
+          <div class="field-grid two-col">
+            <label>Nama Mempelai Pria
+              <input id="cfg-groom-name" type="text" required />
+            </label>
+            <label>Nama Mempelai Wanita
+              <input id="cfg-bride-name" type="text" required />
+            </label>
+            <label>Profesi Pria
+              <input id="cfg-groom-profession" type="text" required />
+            </label>
+            <label>Profesi Wanita
+              <input id="cfg-bride-profession" type="text" required />
+            </label>
+            <label>Orang Tua Pria (tiap baris jadi baris baru)
+              <textarea id="cfg-groom-parents" rows="3" required placeholder="Putra pertama dari&#10;Bapak Nama Ayah&#10;Ibu Nama Ibu"></textarea>
+              <small class="field-help">Format 3 baris: keterangan anak, nama ayah, nama ibu.</small>
+            </label>
+            <label>Orang Tua Wanita (tiap baris jadi baris baru)
+              <textarea id="cfg-bride-parents" rows="3" required placeholder="Putri pertama dari&#10;Bapak Nama Ayah&#10;Ibu Nama Ibu"></textarea>
+              <small class="field-help">Format 3 baris: keterangan anak, nama ayah, nama ibu.</small>
+            </label>
+          </div>
+        </fieldset>
 
-        <div class="field-grid two-col">
-          <label>Tanggal Akad
-            <input id="cfg-akad-date" type="text" required />
-          </label>
-          <label>Waktu Akad
-            <input id="cfg-akad-time" type="text" required />
-          </label>
-          <label>Lokasi Akad (untuk kartu acara)
-            <textarea id="cfg-akad-event-location" rows="2" required></textarea>
-          </label>
-          <label>Dresscode Akad
-            <input id="cfg-akad-dresscode" type="text" required />
-          </label>
-        </div>
+        <fieldset class="form-section">
+          <legend>Dekorasi Kode</legend>
+          <div class="field-grid two-col">
+            <label>Nama Kode Snippet (Groom)
+              <input id="cfg-code-groom-name" type="text" required />
+            </label>
+            <label>Nama Kode Snippet (Bride)
+              <input id="cfg-code-bride-name" type="text" required />
+            </label>
+          </div>
+        </fieldset>
 
-        <div class="field-grid two-col">
-          <label>Tanggal Resepsi
-            <input id="cfg-resepsi-date" type="text" required />
-          </label>
-          <label>Waktu Resepsi
-            <input id="cfg-resepsi-time" type="text" required />
-          </label>
-          <label>Lokasi Resepsi (untuk kartu acara)
-            <textarea id="cfg-resepsi-event-location" rows="2" required></textarea>
-          </label>
-          <label>Dresscode Resepsi
-            <input id="cfg-resepsi-dresscode" type="text" required />
-          </label>
-        </div>
+        <fieldset class="form-section">
+          <legend>Jadwal Acara</legend>
+          <div class="field-grid two-col">
+            <label>Tanggal Akad
+              <input id="cfg-akad-date" type="text" required />
+            </label>
+            <label>Tanggal Resepsi
+              <input id="cfg-resepsi-date" type="text" required />
+            </label>
+            <label>Waktu Akad
+              <input id="cfg-akad-time" type="text" required />
+            </label>
+            <label>Waktu Resepsi
+              <input id="cfg-resepsi-time" type="text" required />
+            </label>
+            <label>Lokasi Akad (untuk kartu acara)
+              <textarea id="cfg-akad-event-location" rows="2" required></textarea>
+            </label>
+            <label>Lokasi Resepsi (untuk kartu acara)
+              <textarea id="cfg-resepsi-event-location" rows="2" required></textarea>
+            </label>
+            <label>Dresscode Akad
+              <input id="cfg-akad-dresscode" type="text" required />
+            </label>
+            <label>Dresscode Resepsi
+              <input id="cfg-resepsi-dresscode" type="text" required />
+            </label>
+          </div>
+        </fieldset>
 
-        <div class="field-grid two-col">
-          <label>Nama Lokasi Akad
-            <input id="cfg-akad-location-name" type="text" required />
-          </label>
-          <label>Google Maps URL Akad
-            <input id="cfg-akad-map-url" type="url" required />
-          </label>
-          <label>Alamat Akad (tiap baris akan jadi baris baru)
-            <textarea id="cfg-akad-address" rows="3" required></textarea>
-          </label>
-          <label>Nama Lokasi Resepsi
-            <input id="cfg-resepsi-location-name" type="text" required />
-          </label>
-          <label>Google Maps URL Resepsi
-            <input id="cfg-resepsi-map-url" type="url" required />
-          </label>
-          <label>Alamat Resepsi (tiap baris akan jadi baris baru)
-            <textarea id="cfg-resepsi-address" rows="3" required></textarea>
-          </label>
-        </div>
+        <fieldset class="form-section">
+          <legend>Hitung Mundur</legend>
+          <div class="field-grid two-col">
+            <label>Waktu Countdown (ISO)
+              <input id="cfg-countdown-iso" type="text" placeholder="2026-12-31T09:00:00" required />
+            </label>
+            <label>Catatan Countdown
+              <input id="cfg-countdown-note" type="text" required />
+            </label>
+            <label>Catatan Setelah Countdown Habis
+              <input id="cfg-countdown-expired-note" type="text" required />
+            </label>
+          </div>
+        </fieldset>
 
-        <div class="field-grid two-col">
-          <label>Judul Halaman (Title)
-            <input id="cfg-page-title" type="text" required />
-          </label>
-          <label>Meta Description
-            <input id="cfg-meta-description" type="text" required />
-          </label>
-          <label>OG Title
-            <input id="cfg-og-title" type="text" required />
-          </label>
-          <label>OG Description
-            <input id="cfg-og-description" type="text" required />
-          </label>
-          <label>Aria Label Badge Tanggal Hero
-            <input id="cfg-hero-aria-label" type="text" required />
-          </label>
-          <label>Loader Command
-            <input id="cfg-loader-command" type="text" required />
-          </label>
-          <label>Nama Kode Snippet (Groom)
-            <input id="cfg-code-groom-name" type="text" required />
-          </label>
-          <label>Nama Kode Snippet (Bride)
-            <input id="cfg-code-bride-name" type="text" required />
-          </label>
-          <label>Nama Rekening Hadiah 1
-            <input id="cfg-gift-account-name-1" type="text" required />
-          </label>
-          <label>Nama Rekening Hadiah 2
-            <input id="cfg-gift-account-name-2" type="text" required />
-          </label>
-          <label>Nama Penutup (Groom)
-            <input id="cfg-closing-groom-name" type="text" required />
-          </label>
-          <label>Nama Penutup (Bride)
-            <input id="cfg-closing-bride-name" type="text" required />
-          </label>
-          <label>Footer Branding
-            <input id="cfg-footer-branding" type="text" required />
-          </label>
-          <label>YouTube Video ID / URL (Musik)
-            <input id="cfg-youtube-video-id" type="text" required placeholder="QgaTQ5-XfMM atau https://www.youtube.com/watch?v=..." />
-            <small class="field-help">Boleh isi ID video atau URL YouTube penuh. Sistem akan simpan sebagai ID video.</small>
-          </label>
-        </div>
+        <fieldset class="form-section">
+          <legend>Lokasi</legend>
+          <div class="field-grid two-col">
+            <label>Nama Lokasi Akad
+              <input id="cfg-akad-location-name" type="text" required />
+            </label>
+            <label>Nama Lokasi Resepsi
+              <input id="cfg-resepsi-location-name" type="text" required />
+            </label>
+            <label>Google Maps URL Akad
+              <input id="cfg-akad-map-url" type="url" required />
+            </label>
+            <label>Google Maps URL Resepsi
+              <input id="cfg-resepsi-map-url" type="url" required />
+            </label>
+            <label>Alamat Akad (tiap baris akan jadi baris baru)
+              <textarea id="cfg-akad-address" rows="3" required></textarea>
+            </label>
+            <label>Alamat Resepsi (tiap baris akan jadi baris baru)
+              <textarea id="cfg-resepsi-address" rows="3" required></textarea>
+            </label>
+          </div>
+        </fieldset>
 
-        <div class="field-grid two-col">
-          <label>Bank Hadiah 1
-            <input id="cfg-gift-bank-1" type="text" required />
-          </label>
-          <label>Nama Rekening Hadiah 1
-            <input id="cfg-gift-name-1" type="text" required />
-          </label>
-          <label>Nomor Rekening Hadiah 1 (tampil)
-            <input id="cfg-gift-number-1" type="text" required placeholder="1234 5678 9012" />
-            <small class="field-help">Ini yang ditampilkan ke tamu. Spasi boleh dipakai.</small>
-          </label>
-          <label>Nilai Copy Hadiah 1 (tanpa spasi jika perlu)
-            <input id="cfg-gift-copy-1" type="text" required placeholder="123456789012" />
-            <small class="field-help">Dipakai tombol salin. Disarankan hanya angka tanpa spasi.</small>
-          </label>
+        <fieldset class="form-section">
+          <legend>Kirim Hadiah</legend>
+          <div class="field-grid two-col">
+            <label>Bank Hadiah 1
+              <input id="cfg-gift-bank-1" type="text" required />
+            </label>
+            <label>Bank Hadiah 2
+              <input id="cfg-gift-bank-2" type="text" required />
+            </label>
+            <label>Nama Rekening Hadiah 1
+              <input id="cfg-gift-name-1" type="text" required />
+            </label>
+            <label>Nama Rekening Hadiah 2
+              <input id="cfg-gift-name-2" type="text" required />
+            </label>
+            <label>Nomor Rekening Hadiah 1 (tampil)
+              <input id="cfg-gift-number-1" type="text" required placeholder="1234 5678 9012" />
+              <small class="field-help">Ini yang ditampilkan ke tamu. Spasi boleh dipakai.</small>
+            </label>
+               <label>Nomor Rekening Hadiah 2 (tampil)
+              <input id="cfg-gift-number-2" type="text" required placeholder="9876 5432 1098" />
+              <small class="field-help">Ini yang ditampilkan ke tamu. Spasi boleh dipakai.</small>
+            </label>
+            <label>Nilai Copy Hadiah 1 (tanpa spasi jika perlu)
+              <input id="cfg-gift-copy-1" type="text" required placeholder="123456789012" />
+              <small class="field-help">Dipakai tombol salin. Disarankan hanya angka tanpa spasi.</small>
+            </label>
+             <label>Nilai Copy Hadiah 2 (tanpa spasi jika perlu)
+              <input id="cfg-gift-copy-2" type="text" required placeholder="987654321098" />
+              <small class="field-help">Dipakai tombol salin. Disarankan hanya angka tanpa spasi.</small>
+            </label>
+            <label>Nama Rekening Hadiah 1 (fallback)
+              <input id="cfg-gift-account-name-1" type="text" required />
+            </label>
+            <label>Nama Rekening Hadiah 2 (fallback)
+              <input id="cfg-gift-account-name-2" type="text" required />
+            </label>
+          </div>
+        </fieldset>
 
-          <label>Bank Hadiah 2
-            <input id="cfg-gift-bank-2" type="text" required />
-          </label>
-          <label>Nama Rekening Hadiah 2
-            <input id="cfg-gift-name-2" type="text" required />
-          </label>
-          <label>Nomor Rekening Hadiah 2 (tampil)
-            <input id="cfg-gift-number-2" type="text" required placeholder="9876 5432 1098" />
-            <small class="field-help">Ini yang ditampilkan ke tamu. Spasi boleh dipakai.</small>
-          </label>
-          <label>Nilai Copy Hadiah 2 (tanpa spasi jika perlu)
-            <input id="cfg-gift-copy-2" type="text" required placeholder="987654321098" />
-            <small class="field-help">Dipakai tombol salin. Disarankan hanya angka tanpa spasi.</small>
-          </label>
-        </div>
+        <fieldset class="form-section">
+          <legend>Penutup</legend>
+          <div class="field-grid two-col">
+            <label>Nama Penutup (Groom)
+              <input id="cfg-closing-groom-name" type="text" required />
+            </label>
+            <label>Nama Penutup (Bride)
+              <input id="cfg-closing-bride-name" type="text" required />
+            </label>
+          </div>
+        </fieldset>
+
+        <fieldset class="form-section">
+          <legend>Footer &amp; Lainnya</legend>
+          <div class="field-grid two-col">
+            <label>Footer Branding
+              <input id="cfg-footer-branding" type="text" required />
+            </label>
+            <label>YouTube Video ID / URL (Musik)
+              <input id="cfg-youtube-video-id" type="text" required placeholder="QgaTQ5-XfMM atau https://www.youtube.com/watch?v=..." />
+              <small class="field-help">Boleh isi ID video atau URL YouTube penuh. Sistem akan simpan sebagai ID video.</small>
+            </label>
+          </div>
+        </fieldset>
 
         <div class="settings-actions">
           <button id="save-config-btn" type="submit">Simpan Pengaturan</button>
@@ -229,6 +269,20 @@
         </div>
       </form>
     </section>
+
+    <aside class="preview-panel" aria-label="Live preview undangan (mobile)">
+      <div class="preview-panel-head">
+        <h2>Live Preview</h2>
+        <button id="preview-refresh-btn" type="button" title="Muat ulang preview">↻ Refresh</button>
+      </div>
+      <div class="mobile-mockup">
+        <div class="mobile-mockup-notch"></div>
+        <div class="mobile-mockup-screen">
+          <iframe id="preview-frame" src="/" title="Live preview undangan" loading="lazy"></iframe>
+        </div>
+      </div>
+    </aside>
+    </div>
 
     <section class="stats" aria-label="Ringkasan RSVP">
       <article>
