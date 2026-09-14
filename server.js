@@ -89,10 +89,20 @@ const DEFAULT_SITE_CONFIG = {
 const DATA_DIR = path.join(__dirname, 'data');
 const RSVP_FILE = path.join(DATA_DIR, 'rsvps.json');
 const RSVP_DB_FILE = path.join(DATA_DIR, 'rsvps.db');
+const INDEX_FILE = path.join(__dirname, 'index.html');
 const rsvpRequestLog = new Map();
 let db;
 
 app.use(express.json());
+app.get(['/', '/index.html'], async (_req, res, next) => {
+  try {
+    const html = await renderPublicIndex();
+    res.set('Cache-Control', 'no-cache');
+    res.type('html').send(html);
+  } catch (error) {
+    next(error);
+  }
+});
 app.use(express.static(__dirname));
 
 async function ensureStorage() {
@@ -285,6 +295,36 @@ async function saveSiteConfig(config) {
      WHERE id = 1`,
     [JSON.stringify(config), new Date().toISOString()]
   );
+}
+
+function escapeHtmlAttribute(value) {
+  return String(value || '')
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
+async function renderPublicIndex() {
+  const [html, config] = await Promise.all([
+    fs.readFile(INDEX_FILE, 'utf8'),
+    getSiteConfig()
+  ]);
+  const branding = config.branding || {};
+  const replaceMetaContent = (source, id, value) => source.replace(
+    new RegExp(`(<meta id="${id}"[^>]*content=")[^"]*(")`),
+    (_match, prefix, suffix) => `${prefix}${escapeHtmlAttribute(value)}${suffix}`
+  );
+
+  let rendered = replaceMetaContent(html, 'meta-description', branding.metaDescription);
+  rendered = replaceMetaContent(rendered, 'meta-og-title', branding.ogTitle);
+  rendered = replaceMetaContent(rendered, 'meta-og-description', branding.ogDescription);
+  rendered = rendered.replace(
+    /(<title id="page-title">)[\s\S]*?(<\/title>)/,
+    (_match, prefix, suffix) => `${prefix}${escapeHtmlAttribute(branding.pageTitle)}${suffix}`
+  );
+
+  return rendered;
 }
 
 async function migrateJsonToSqlite() {
